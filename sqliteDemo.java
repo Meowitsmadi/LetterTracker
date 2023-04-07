@@ -4,18 +4,19 @@ import java.sql.*;
 
 public class sqliteDemo {
 	
-	// connect to database given when method is called.
-	public static void connect(String dbName) {
+	// connect to the letterTrackerInfo database when method is called.
+	public static Connection connect() {
 		Connection c = null;
 		
 		try {
 			Class.forName("org.sqlite.JDBC"); // loading the driver
-			c = DriverManager.getConnection("jdbc:sqlite:" + dbName + ".db");
+			c = DriverManager.getConnection("jdbc:sqlite:letterTrackerInfo.db");
 			System.out.println("SQLite DB connected");
 		}
 		catch(Exception e){
 			System.out.println(e);
 		}
+		return c;
 	}
 	
 	// create database file using inputed string
@@ -56,15 +57,19 @@ public class sqliteDemo {
 		catch(Exception e){
     		System.out.println(e);
    		}
+	}
+	
+	
+	public static void PopulateDefaultInfo() {
 		
-
 	}
 
 	
 	public static void main(String[] args) throws Exception{
-		//createDatabase("users.db");
-		//sqliteDemo.connect("eclipseSQLtest.db");
-		//createTable("users", "test1");
+		//createDatabase("letterTrackerInfo.db");
+		//sqliteDemo.connect();
+		//createTable("letterTrackerInfo", "userInfo");
+		
 	}
 	
 }
