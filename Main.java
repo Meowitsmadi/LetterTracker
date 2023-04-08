@@ -2,6 +2,7 @@ package application;
 	
 import javafx.application.Application;
 import javafx.stage.Stage;
+import sql.sqliteDemo;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
@@ -18,7 +19,7 @@ public class Main extends Application {
 			primaryStage.getIcons().add(icon);
 			primaryStage.setResizable(false);
 			primaryStage.setTitle("Letter Tracker");
-			
+			sqliteDemo.PopulateInitialData();
 			Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
