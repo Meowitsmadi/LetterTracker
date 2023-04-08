@@ -27,7 +27,10 @@ public class ChangePassController {
 	
 	@FXML
 	public void SaveNewPassword(ActionEvent event) throws IOException, SQLException {
-		if (txtNewPassword.getText().equals(txtConfirmPassword.getText()))
+		if (txtNewPassword.getText().equals("p")) {
+			status.setText("You cannot use the default password again");
+		}
+		else if (txtNewPassword.getText().equals(txtConfirmPassword.getText()))
 		{
 			//change pass to inputed text
 			passwordModel.ChangePassword(txtNewPassword.getText());
