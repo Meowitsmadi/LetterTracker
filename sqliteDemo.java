@@ -4,9 +4,11 @@ import java.sql.*;
 
 public class sqliteDemo {
 	
+	private static Connection c;
+	
 	// connect to the letterTrackerInfo database when method is called.
 	public static Connection connect() {
-		Connection c = null;
+		c = null;
 		
 		try {
 			Class.forName("org.sqlite.JDBC"); // loading the driver
@@ -37,12 +39,12 @@ public class sqliteDemo {
 	
 	// create table inside given database with given name.
 	public static void createTable(String dbName, String tableName) {
-		Connection c = null;
+		c = null;
 		Statement st = null;
 		try {
 			String sql = "CREATE TABLE IF NOT EXISTS " + tableName +
 					"(id INTEGER PRIMARY KEY," +
-					" pass TEXT NOT NULL)";
+					" pass TEXT)";
 			
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:" + dbName + ".db");
@@ -59,16 +61,33 @@ public class sqliteDemo {
    		}
 	}
 	
-	
-	public static void PopulateDefaultInfo() {
+	public static void InsertData() throws SQLException {
+		c = DriverManager.getConnection("jdbc:sqlite:letterTrackerInfo.db");
+		Statement st = null;
 		
+		String test = "INSERT OR IGNORE INTO userInfo(id, pass) VALUES(1, \"p\")";
+		//String query = String.format("INSERT INTO %s(%s) VALUES(%s)", table, column, value);
+		try {
+			st = c.createStatement();
+			st.execute(test);
+			st.close();
+			c.close();
+			
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	} 
+	
+	public static void PopulateInitialData() throws SQLException {
+		createDatabase("letterTrackerInfo.db");
+		createTable("letterTrackerInfo", "userInfo");
+		InsertData();
+//		InsertData("letterTrackerInfo", "userInfo", "id", String.valueOf(1));
+//		InsertData("letterTrackerInfo","userInfo", "pass", "\"p\"");
 	}
-
 	
 	public static void main(String[] args) throws Exception{
-		//createDatabase("letterTrackerInfo.db");
-		//sqliteDemo.connect();
-		//createTable("letterTrackerInfo", "userInfo");
 		
 	}
 	
