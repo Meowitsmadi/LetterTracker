@@ -25,12 +25,21 @@ public class SceneController {
 	@FXML
 	private Label isConnected;
 	
-	public void Login(ActionEvent event) {
+	public void Login(ActionEvent event) throws IOException {
 		try {
-			// check if inputed password = DB password	
-			if (loginModel.checkLogin(1, txtPassword.getText())) 
+			// if password in DB does not equal p meaning not first time, but user enters p again, decline
+			if ((txtPassword.getText().equals("p")) && (!loginModel.checkLogin(1, "p")))
 			{
-				isConnected.setText("Login success");
+				isConnected.setText("You cannot use the default PW again");
+			}
+			else if (txtPassword.getText().equals("p")) {
+				GoResetPassword(event);
+			}
+			// check if inputed password = DB password	
+			else if (loginModel.checkLogin(1, txtPassword.getText())) 
+			{
+				isConnected.setText("Login success");	
+				
 			}
 			else if (txtPassword.getText().isEmpty()) 
 			{
