@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.CheckMenuItem?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -90,40 +91,40 @@
                   <TextField GridPane.columnIndex="1" />
                   <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Gender:" wrappingWidth="112.71437072753906" GridPane.rowIndex="2" />
-                  <SplitMenuButton mnemonicParsing="false" text="SplitMenuButton" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <SplitMenuButton mnemonicParsing="false" text="Gender" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                      <MenuItem mnemonicParsing="false" text="Action 2" />
+                      <MenuItem mnemonicParsing="false" text="Male" />
+                      <MenuItem mnemonicParsing="false" text="Female" />
                     </items>
                   </SplitMenuButton>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Characteristics:" wrappingWidth="119.38101196289062" GridPane.rowIndex="3" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Academic Characteristics:" wrappingWidth="116.71437072753906" GridPane.rowIndex="4" />
-                  <SplitMenuButton mnemonicParsing="false" text="SplitMenuButton" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <SplitMenuButton mnemonicParsing="false" text="Personal Characteristics" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Action 1" />
-                        <MenuItem mnemonicParsing="false" text="Action 2" />
+                        <CheckMenuItem mnemonicParsing="false" text="very passionate" />
+                        <CheckMenuItem mnemonicParsing="false" text="very enthusiastic" />
                      </items>
                   </SplitMenuButton>
-                  <SplitMenuButton mnemonicParsing="false" text="SplitMenuButton" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <SplitMenuButton mnemonicParsing="false" text="Academic Characteristics" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Action 1" />
-                        <MenuItem mnemonicParsing="false" text="Action 2" />
+                        <CheckMenuItem mnemonicParsing="false" text="submitted well-written assignments" />
+                        <CheckMenuItem mnemonicParsing="false" text="worked hard" />
                      </items>
                   </SplitMenuButton>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Student's First Semester:" GridPane.rowIndex="5" />
                   <TextField prefHeight="27.0" prefWidth="94.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                  <SplitMenuButton mnemonicParsing="false" text="SplitMenuButton" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                  <SplitMenuButton mnemonicParsing="false" text="Semester" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Action 1" />
-                        <MenuItem mnemonicParsing="false" text="Action 2" />
+                        <MenuItem mnemonicParsing="false" text="Spring" />
+                        <MenuItem mnemonicParsing="false" text="Fall" />
                      </items>
                   </SplitMenuButton>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Year:" wrappingWidth="41.78350830078125" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Courses Taken:" GridPane.rowIndex="6" />
-                  <SplitMenuButton mnemonicParsing="false" text="SplitMenuButton" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                  <SplitMenuButton mnemonicParsing="false" text="Courses" GridPane.columnIndex="1" GridPane.rowIndex="6">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Action 1" />
-                        <MenuItem mnemonicParsing="false" text="Action 2" />
+                        <CheckMenuItem mnemonicParsing="false" text="CS151: Object Oriented Design" />
+                        <CheckMenuItem mnemonicParsing="false" text="CS166: Information Security" />
                      </items>
                   </SplitMenuButton>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Grade:" GridPane.columnIndex="2" GridPane.rowIndex="6" />
@@ -131,10 +132,11 @@
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Target School:" wrappingWidth="119.38101196289062" GridPane.rowIndex="7" />
                   <TextField GridPane.columnIndex="1" GridPane.rowIndex="7" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Program:" wrappingWidth="116.71437072753906" GridPane.rowIndex="8" />
-                  <SplitMenuButton mnemonicParsing="false" text="SplitMenuButton" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                  <SplitMenuButton mnemonicParsing="false" text="Program" GridPane.columnIndex="1" GridPane.rowIndex="8">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Action 1" />
-                        <MenuItem mnemonicParsing="false" text="Action 2" />
+                        <MenuItem mnemonicParsing="false" text="Master of Science (MS)" />
+                        <MenuItem mnemonicParsing="false" text="Master of Business Administration (MBA)" />
+                        <MenuItem mnemonicParsing="false" text="Doctor of Philosophy (PhD)" />
                      </items>
                   </SplitMenuButton>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Current Date:" wrappingWidth="116.71437072753906" GridPane.rowIndex="9" />
