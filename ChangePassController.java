@@ -10,6 +10,9 @@ import javafx.scene.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 
 public class ChangePassController {
 
@@ -46,6 +49,26 @@ public class ChangePassController {
 		{
 			status.setText("Passwords do not match");
 		}	
+	}
+	
+	@FXML
+	private ComboBox<String> genders;
+	
+	@FXML
+	private ComboBox<String> semesters;
+	
+	@FXML
+	private ComboBox<String> programs;
+
+	private ObservableList<String> genderChoices = FXCollections.observableArrayList("Male", "Female");
+	private ObservableList<String> semesterChoices = FXCollections.observableArrayList("Fall", "Summer", "Spring");
+	private ObservableList<String> programChoices = FXCollections.observableArrayList("Master of science (MS)", "Master of business administration (MBA)",
+			"Doctor of philosophy (PhD)");
+
+	public void initialize() {
+	    genders.setItems(genderChoices);
+	    semesters.setItems(semesterChoices);
+	    programs.setItems(programChoices);
 	}
 	
 }
