@@ -44,7 +44,7 @@ public class sqliteDemo {
 		try {
 			String sql = "CREATE TABLE IF NOT EXISTS " + tableName +
 					"(id INTEGER PRIMARY KEY," +
-					" pass TEXT)";
+					" info TEXT)";
 			
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:" + dbName + ".db");
@@ -61,11 +61,16 @@ public class sqliteDemo {
    		}
 	}
 	
-	public static void InsertData() throws SQLException {
+	public static void InsertData(String table, String data) throws SQLException {
 		c = DriverManager.getConnection("jdbc:sqlite:letterTrackerInfo.db");
 		Statement st = null;
-		
-		String test = "INSERT OR IGNORE INTO userInfo(id, pass) VALUES(1, \"p\")";
+		String test = "";
+		if(table == "userInfo") {
+			test = "INSERT OR IGNORE INTO "+table+"(id, info) VALUES(1, \"p\")";
+		}
+		else {
+			test = "INSERT OR IGNORE INTO "+table+"(info) VALUES(\""+ data +"\")";
+		}
 		//String query = String.format("INSERT INTO %s(%s) VALUES(%s)", table, column, value);
 		try {
 			st = c.createStatement();
@@ -82,9 +87,37 @@ public class sqliteDemo {
 	public static void PopulateInitialData() throws SQLException {
 		createDatabase("letterTrackerInfo.db");
 		createTable("letterTrackerInfo", "userInfo");
-		InsertData();
+		createTable("letterTrackerInfo", "semester");
+		createTable("letterTrackerInfo", "courses");
+		createTable("letterTrackerInfo", "programs");
+		createTable("letterTrackerInfo", "personalChara");
+		createTable("letterTrackerInfo", "AcademicChara");
+		
+		InsertData("userInfo", "p");
+		
+		InsertData("semester", "Spring");
+		InsertData("semester", "Summer");
+		InsertData("semester", "Fall");
+		InsertData("semester", "Winter");
+		
+		InsertData("courses", "CS151: Object-Oriented Design");
+		InsertData("courses", "CS166: Information Security");
+		InsertData("courses", "CS154: Theory of Computation");
+		InsertData("courses", "CS160: Software Engineering");
+		InsertData("courses", "CS256: Cryptography");
+		InsertData("courses", "CS146: Data Structures and Algorithmns");
+		InsertData("courses", "CS152: Programming Languages Paradigm");
+		
+		InsertData("programs", "Master of Science (MS)");
+		InsertData("userInfo", "Master of Business administration (MBA)");
+		InsertData("userInfo", "Doctor of philosophy (PhD)");
+		
+		InsertData("personalCharacteristics", "p");
+		//InsertData("userInfo", "p");
+		//InsertData("userInfo", "p");
+		//InsertData("userInfo", "p");
 //		InsertData("letterTrackerInfo", "userInfo", "id", String.valueOf(1));
-//		InsertData("letterTrackerInfo","userInfo", "pass", "\"p\"");
+//		InsertData("letterTrackerInfo","userInfo", "info", "\"p\"");
 	}
 	
 	public static void main(String[] args) throws Exception{
