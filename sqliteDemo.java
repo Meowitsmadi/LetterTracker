@@ -91,7 +91,7 @@ public class sqliteDemo {
 		createTable("letterTrackerInfo", "courses");
 		createTable("letterTrackerInfo", "programs");
 		createTable("letterTrackerInfo", "personalChara");
-		createTable("letterTrackerInfo", "AcademicChara");
+		createTable("letterTrackerInfo", "academicChara");
 		
 		InsertData("userInfo", "p");
 		
@@ -112,12 +112,19 @@ public class sqliteDemo {
 		InsertData("userInfo", "Master of Business administration (MBA)");
 		InsertData("userInfo", "Doctor of philosophy (PhD)");
 		
-		InsertData("personalCharacteristics", "p");
-		//InsertData("userInfo", "p");
-		//InsertData("userInfo", "p");
-		//InsertData("userInfo", "p");
-//		InsertData("letterTrackerInfo", "userInfo", "id", String.valueOf(1));
-//		InsertData("letterTrackerInfo","userInfo", "info", "\"p\"");
+		InsertData("personalChara", "very passionate");
+		InsertData("personalChara", "very enthusiastic");
+		InsertData("personalChara", "punctual");
+		InsertData("personalChara", "attentive");
+		InsertData("personalChara", "polite");
+		
+		InsertData("academicChara", "submitted well-written assignments");
+		InsertData("academicChara", "participated in all of my class activities");
+		InsertData("academicChara", "worked hard");
+		InsertData("academicChara", "was very well prepared for every exam and assignment");
+		InsertData("academicChara", " picked up new skills quickly");
+		InsertData("academicChara", " was able to excel academically at the top of my class");
+
 	}
 	
 	public static void main(String[] args) throws Exception{
