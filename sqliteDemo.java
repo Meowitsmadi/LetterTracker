@@ -87,6 +87,7 @@ public class sqliteDemo {
 	public static void PopulateInitialData() throws SQLException {
 		createDatabase("letterTrackerInfo.db");
 		createTable("letterTrackerInfo", "userInfo");
+		createTable("letterTrackerInfo", "userData");
 		createTable("letterTrackerInfo", "semester");
 		createTable("letterTrackerInfo", "courses");
 		createTable("letterTrackerInfo", "programs");
@@ -94,6 +95,12 @@ public class sqliteDemo {
 		createTable("letterTrackerInfo", "academicChara");
 		
 		InsertData("userInfo", "p");
+		
+		InsertData("userData", "Ahmad  Yazdankhah");
+		InsertData("userData", "Lecturer");
+		InsertData("userData", "SJSU, CS Department");
+		InsertData("userData", "ahmad.yazdankhah@sjsu.edu");
+		InsertData("userData", "(123) 456-7890");
 		
 		InsertData("semester", "Spring");
 		InsertData("semester", "Summer");
