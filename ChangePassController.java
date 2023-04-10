@@ -28,6 +28,7 @@ public class ChangePassController {
 	
 	@FXML private Label status;
 	
+	//Saves the new password into the DB, restricts them from resetting to default password again, and checks confirmation
 	@FXML
 	public void SaveNewPassword(ActionEvent event) throws IOException, SQLException {
 		if (txtNewPassword.getText().equals("p")) {
