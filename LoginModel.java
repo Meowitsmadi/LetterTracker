@@ -20,7 +20,7 @@ public class LoginModel {
 		ResultSet rs = null;
 		
 		// selects from table where info is our inputed ID and pass
-		String query = "SELECT * FROM userInfo WHERE id = ? and pass = ?"; 
+		String query = "SELECT * FROM userInfo WHERE id = ? and userInfo = ?"; 
 		try {
 			pst = conn.prepareStatement(query);
 			pst.setInt(1, userID);
