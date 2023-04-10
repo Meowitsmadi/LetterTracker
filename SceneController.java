@@ -3,10 +3,13 @@ package application;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.*;
@@ -17,6 +20,19 @@ public class SceneController {
 	private Scene scene;
 	private Parent root;
 	public LoginModel loginModel = new LoginModel();
+	
+private ComboBox<String> genders;
+	
+	
+	private ComboBox<String> semesters;
+	
+	
+	private ComboBox<String> programs;
+
+	private ObservableList<String> genderChoices = FXCollections.observableArrayList("Male", "Female");
+	private ObservableList<String> semesterChoices = FXCollections.observableArrayList("Fall", "Summer", "Spring");
+	private ObservableList<String> programChoices = FXCollections.observableArrayList("Master of science (MS)", "Master of business administration (MBA)",
+			"Doctor of philosophy (PhD)");
 	
 	
 	@FXML 
@@ -98,5 +114,11 @@ public class SceneController {
 		scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
+		
+	    genders.setItems(genderChoices);
+		semesters.setItems(semesterChoices);
+		programs.setItems(programChoices);
 	}
+	
+
 }
