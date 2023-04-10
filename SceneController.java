@@ -1,14 +1,17 @@
 package application;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.*;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -16,7 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.*;
 import sql.sqliteDemo;
 
-public class SceneController {
+public class SceneController implements Initializable {
 	
 	private Stage stage;
 	private Scene scene;
@@ -24,12 +27,22 @@ public class SceneController {
 	public LoginModel loginModel = new LoginModel();
 	
 	@FXML
-	public ComboBox<String> genders = new ComboBox<String>();
-	@FXML
-	public ComboBox<String> semesters= new ComboBox<String>();
-	@FXML
-	public ComboBox<String> programs = new ComboBox<String>();
+	private ComboBox<String> genders = new ComboBox<String>();
 	
+	@FXML
+	private ComboBox<String> semesters = new ComboBox<String>();
+	
+	@FXML
+	private ComboBox<String> programs = new ComboBox<String>();
+	
+	@FXML
+	private ComboBox<String> personalChar = new ComboBox<String>();
+	
+	@FXML
+	private ComboBox<String> academicChar = new ComboBox<String>();
+	
+	@FXML
+	private ComboBox<String> courses = new ComboBox<String>();
 	
 	@FXML 
 	private TextField txtPassword; 
@@ -105,18 +118,23 @@ public class SceneController {
 		stage.show();
 	}
 	public void switchToNewLORScene(ActionEvent event) throws IOException{
-		ArrayList<String> d = sqliteDemo.getAllData("semester");
-		ObservableList<String> g = FXCollections.observableArrayList("Boy", "Girl");
-		genders.setItems(g);
 		
 		root = FXMLLoader.load(getClass().getResource("/view/LTCreateNewRec.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
-		//genders.setItems(g);
-		//semesters.setItems(FXCollections.observableArrayList(sqliteDemo.getAllData("semester")));
-		//programs.setItems(FXCollections.observableArrayList(sqliteDemo.getAllData("programs")));
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		genders.setItems(FXCollections.observableArrayList(sqliteDemo.getAllData("gender")));
+		semesters.setItems(FXCollections.observableArrayList(sqliteDemo.getAllData("semester")));
+		programs.setItems(FXCollections.observableArrayList(sqliteDemo.getAllData("programs")));
+		personalChar.setItems(FXCollections.observableArrayList(sqliteDemo.getAllData("personalChara")));
+		academicChar.setItems(FXCollections.observableArrayList(sqliteDemo.getAllData("academicChara")));
+		courses.setItems(FXCollections.observableArrayList(sqliteDemo.getAllData("courses")));
+		
 	}
 	
 
