@@ -85,10 +85,7 @@ public class sqliteDemo {
 	} 
 	
 	public static void PopulateInitialData() throws SQLException {
-		// initalize database
 		createDatabase("letterTrackerInfo.db");
-		
-		// initalize tables
 		createTable("letterTrackerInfo", "userInfo");
 		createTable("letterTrackerInfo", "userData");
 		createTable("letterTrackerInfo", "semester");
@@ -97,23 +94,19 @@ public class sqliteDemo {
 		createTable("letterTrackerInfo", "personalChara");
 		createTable("letterTrackerInfo", "academicChara");
 		
-		//initalize user info = password
 		InsertData("userInfo", "p");
 		
-		// initalize info about the faculty using the software
 		InsertData("userData", "Ahmad  Yazdankhah");
 		InsertData("userData", "Lecturer");
 		InsertData("userData", "SJSU, CS Department");
 		InsertData("userData", "ahmad.yazdankhah@sjsu.edu");
 		InsertData("userData", "(123) 456-7890");
 		
-		// initialize semesters into database
 		InsertData("semester", "Spring");
 		InsertData("semester", "Summer");
 		InsertData("semester", "Fall");
 		InsertData("semester", "Winter");
 		
-		// initialize courses into database
 		InsertData("courses", "CS151: Object-Oriented Design");
 		InsertData("courses", "CS166: Information Security");
 		InsertData("courses", "CS154: Theory of Computation");
@@ -122,25 +115,22 @@ public class sqliteDemo {
 		InsertData("courses", "CS146: Data Structures and Algorithmns");
 		InsertData("courses", "CS152: Programming Languages Paradigm");
 		
-		// intialize programs into database
 		InsertData("programs", "Master of Science (MS)");
-		InsertData("programs", "Master of Business administration (MBA)");
-		InsertData("programs", "Doctor of philosophy (PhD)");
+		InsertData("userInfo", "Master of Business administration (MBA)");
+		InsertData("userInfo", "Doctor of philosophy (PhD)");
 		
-		//initialize personal characteristics into database
 		InsertData("personalChara", "very passionate");
 		InsertData("personalChara", "very enthusiastic");
 		InsertData("personalChara", "punctual");
 		InsertData("personalChara", "attentive");
 		InsertData("personalChara", "polite");
 		
-		// initialize academic characteristics into database
 		InsertData("academicChara", "submitted well-written assignments");
 		InsertData("academicChara", "participated in all of my class activities");
 		InsertData("academicChara", "worked hard");
 		InsertData("academicChara", "was very well prepared for every exam and assignment");
-		InsertData("academicChara", "picked up new skills quickly");
-		InsertData("academicChara", "was able to excel academically at the top of my class");
+		InsertData("academicChara", " picked up new skills quickly");
+		InsertData("academicChara", " was able to excel academically at the top of my class");
 
 	}
 	
