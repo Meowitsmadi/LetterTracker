@@ -14,8 +14,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.*;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TextField;
 import javafx.stage.*;
 import sql.sqliteDemo;
@@ -43,14 +45,23 @@ public class SceneController implements Initializable {
 	@FXML
 	private ComboBox<String> programs = new ComboBox<String>();
 	
-	@FXML
-	private ComboBox<String> personalChar = new ComboBox<String>();
+	//@FXML
+	//private ComboBox<String> personalChar = new ComboBox<String>();
+	
+	//@FXML
+	//private ComboBox<String> academicChar = new ComboBox<String>();
+	
+	//@FXML
+	//private ComboBox<String> courses = new ComboBox<String>();
 	
 	@FXML
-	private ComboBox<String> academicChar = new ComboBox<String>();
+	private SplitMenuButton personalChar = new SplitMenuButton();
 	
 	@FXML
-	private ComboBox<String> courses = new ComboBox<String>();
+	private SplitMenuButton academicChar = new SplitMenuButton();
+	
+	@FXML
+	private SplitMenuButton courses = new SplitMenuButton();
 	
 	// Text field containing password inputed by user
 	@FXML 
@@ -150,9 +161,17 @@ public class SceneController implements Initializable {
 		genders.setItems(FXCollections.observableArrayList(sqliteDemo.getAllData("gender")));
 		semesters.setItems(FXCollections.observableArrayList(sqliteDemo.getAllData("semester")));
 		programs.setItems(FXCollections.observableArrayList(sqliteDemo.getAllData("programs")));
-		personalChar.setItems(FXCollections.observableArrayList(sqliteDemo.getAllData("personalChara")));
-		academicChar.setItems(FXCollections.observableArrayList(sqliteDemo.getAllData("academicChara")));
-		courses.setItems(FXCollections.observableArrayList(sqliteDemo.getAllData("courses")));
+		for (String s : sqliteDemo.getAllData("personalChara")) {
+			personalChar.getItems().add(new CheckMenuItem(s));
+		}
+				
+		for (String s : sqliteDemo.getAllData("academicChara")) {
+			academicChar.getItems().add(new CheckMenuItem(s));
+		}
+				
+		for (String s : sqliteDemo.getAllData("courses")) {
+			courses.getItems().add(new CheckMenuItem(s));
+		}
 		
 	}
 	
