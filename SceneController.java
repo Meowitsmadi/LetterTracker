@@ -1,5 +1,6 @@
 package application;
 
+// Importing necessary libraries
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -19,12 +20,19 @@ import javafx.scene.control.TextField;
 import javafx.stage.*;
 import sql.sqliteDemo;
 
+// Defining the SceneController class which deals with switching to various scenes and implements the Initializable interface
+// for creating and populating Combo Boxes
 public class SceneController implements Initializable {
 	
+	
+	// Declaring necessary variables for creating create pages and login
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
 	public LoginModel loginModel = new LoginModel();
+	
+	/* Initializes Combo Boxes for the gender, semester, programs, personal characteristics, academic characteristics, and courses
+	   in the Create New Recommendation page */
 	
 	@FXML
 	private ComboBox<String> genders = new ComboBox<String>();
@@ -44,12 +52,15 @@ public class SceneController implements Initializable {
 	@FXML
 	private ComboBox<String> courses = new ComboBox<String>();
 	
+	// Text field containing password inputed by user
 	@FXML 
 	private TextField txtPassword; 
 	
+	// Label displaying login status of user
 	@FXML
 	private Label isConnected;
 	
+	// Method that handles user login and authentication
 	public void Login(ActionEvent event) throws IOException {
 		try {
 			// if password in DB does not equal p meaning not first time, but user enters p again, decline
@@ -81,6 +92,7 @@ public class SceneController implements Initializable {
 		}
 	}
 	
+	// Method that switches to the login scene
 	@FXML
 	public void switchToLoginScene(ActionEvent event) throws IOException, SQLException{
 		root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
@@ -90,6 +102,7 @@ public class SceneController implements Initializable {
 		stage.show();
 	}
 	
+	// Method that switches to the home scene
 	@FXML
 	public void switchToHomeScene(ActionEvent event) throws IOException, SQLException{
 		Login(event); // check if PW is correct
@@ -102,6 +115,7 @@ public class SceneController implements Initializable {
 		}
 	}
 	
+	// Method that switches to the reset password scene
 	public void GoResetPassword(ActionEvent event) throws IOException {
 		root = FXMLLoader.load(getClass().getResource("/view/firstLogin.fxml"));
 		stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -110,6 +124,7 @@ public class SceneController implements Initializable {
 		stage.show();
 	}
 	
+	// Method switches the scene to home page view when the reset password button is clicked
 	public void switchToResetPWScene(ActionEvent event) throws IOException{
 		root = FXMLLoader.load(getClass().getResource("/view/LThomepage.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -117,6 +132,8 @@ public class SceneController implements Initializable {
 		stage.setScene(scene);
 		stage.show();
 	}
+	
+	// Method switches the scene to the Create New LOR page when the create new recommendation button is clicked
 	public void switchToNewLORScene(ActionEvent event) throws IOException{
 		
 		root = FXMLLoader.load(getClass().getResource("/view/LTCreateNewRec.fxml"));
@@ -125,7 +142,9 @@ public class SceneController implements Initializable {
 		stage.setScene(scene);
 		stage.show();
 	}
-
+	
+	
+	// Method initializes the combo boxes in the Create New Recommendation page by populating them with their respective data from the database
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		genders.setItems(FXCollections.observableArrayList(sqliteDemo.getAllData("gender")));
