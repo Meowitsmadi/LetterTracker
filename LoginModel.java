@@ -15,6 +15,7 @@ public class LoginModel {
 		}
 	}
 	
+	// checks if the inputted password matches the one in the database
 	public boolean checkLogin(int userID, String password) throws SQLException {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
