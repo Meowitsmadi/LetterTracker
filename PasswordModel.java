@@ -18,7 +18,7 @@ public class PasswordModel {
 	public static void ChangePassword(String password) throws SQLException {
 		PreparedStatement pst = null;
 		// selects from table where info is our inputed ID and pass
-		String query = "UPDATE userInfo SET pass = ? WHERE id = 1;"; 
+		String query = "UPDATE userInfo SET info = ? WHERE id = 1;"; 
 		try {
 			pst = conn.prepareStatement(query);
 			pst.setString(1, password);

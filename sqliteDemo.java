@@ -1,6 +1,10 @@
 package sql;
 
 import java.sql.*;
+import java.util.ArrayList;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class sqliteDemo {
 	
@@ -44,7 +48,7 @@ public class sqliteDemo {
 		try {
 			String sql = "CREATE TABLE IF NOT EXISTS " + tableName +
 					"(id INTEGER PRIMARY KEY," +
-					" info TEXT)";
+					" info TEXT UNIQUE)";
 			
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:" + dbName + ".db");
@@ -84,11 +88,29 @@ public class sqliteDemo {
 		}
 	} 
 	
+	public static ArrayList<String> getAllData(String table) {
+		ArrayList<String> tableValues = new ArrayList<>();
+		try {
+			java.sql.Statement stm1 = c.createStatement();
+	        java.sql.ResultSet result1 = null;
+			result1 = stm1.executeQuery("select * from "+table);
+			while(result1.next())
+			{
+			       // System.out.println(2);
+			        tableValues.add(result1.getString(2));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} //table information query
+        return tableValues;
+      }
+	
 	public static void PopulateInitialData() throws SQLException {
-		// initalize database
+		// initialize database
 		createDatabase("letterTrackerInfo.db");
 		
-		// initalize tables
+		//initial tables in database
 		createTable("letterTrackerInfo", "userInfo");
 		createTable("letterTrackerInfo", "userData");
 		createTable("letterTrackerInfo", "semester");
@@ -96,24 +118,28 @@ public class sqliteDemo {
 		createTable("letterTrackerInfo", "programs");
 		createTable("letterTrackerInfo", "personalChara");
 		createTable("letterTrackerInfo", "academicChara");
-		
-		//initalize user info = password
+		createTable("letterTrackerInfo", "gender");
+			    
+		// initialize user login info
 		InsertData("userInfo", "p");
 		
-		// initalize info about the faculty using the software
+		InsertData("gender", "Male");
+		InsertData("gender", "Female");
+		
+		// initialize faculty data in database
 		InsertData("userData", "Ahmad  Yazdankhah");
 		InsertData("userData", "Lecturer");
 		InsertData("userData", "SJSU, CS Department");
 		InsertData("userData", "ahmad.yazdankhah@sjsu.edu");
 		InsertData("userData", "(123) 456-7890");
 		
-		// initialize semesters into database
+		//initialize semesters data in database
 		InsertData("semester", "Spring");
 		InsertData("semester", "Summer");
 		InsertData("semester", "Fall");
 		InsertData("semester", "Winter");
 		
-		// initialize courses into database
+		//initialize courses data in database
 		InsertData("courses", "CS151: Object-Oriented Design");
 		InsertData("courses", "CS166: Information Security");
 		InsertData("courses", "CS154: Theory of Computation");
@@ -122,30 +148,27 @@ public class sqliteDemo {
 		InsertData("courses", "CS146: Data Structures and Algorithmns");
 		InsertData("courses", "CS152: Programming Languages Paradigm");
 		
-		// intialize programs into database
+		//initialize programs data in database
 		InsertData("programs", "Master of Science (MS)");
 		InsertData("programs", "Master of Business administration (MBA)");
 		InsertData("programs", "Doctor of philosophy (PhD)");
 		
-		//initialize personal characteristics into database
+		//initialize semester data in database
 		InsertData("personalChara", "very passionate");
 		InsertData("personalChara", "very enthusiastic");
 		InsertData("personalChara", "punctual");
 		InsertData("personalChara", "attentive");
 		InsertData("personalChara", "polite");
 		
-		// initialize academic characteristics into database
+		//initialize semester data in database
 		InsertData("academicChara", "submitted well-written assignments");
 		InsertData("academicChara", "participated in all of my class activities");
 		InsertData("academicChara", "worked hard");
 		InsertData("academicChara", "was very well prepared for every exam and assignment");
-		InsertData("academicChara", "picked up new skills quickly");
-		InsertData("academicChara", "was able to excel academically at the top of my class");
+		InsertData("academicChara", " picked up new skills quickly");
+		InsertData("academicChara", " was able to excel academically at the top of my class");
 
 	}
 	
-	public static void main(String[] args) throws Exception{
-		
-	}
 	
 }
