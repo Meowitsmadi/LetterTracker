@@ -36,7 +36,7 @@ public class ChangePassController {
 		else if (txtNewPassword.getText().equals(txtConfirmPassword.getText()))
 		{
 			//change pass to inputed text
-			passwordModel.ChangePassword(txtNewPassword.getText());
+			PasswordModel.ChangePassword(txtNewPassword.getText());
 			status.setText("Password successfully changed!");
 			
 			//go back to home screen after save
@@ -51,24 +51,5 @@ public class ChangePassController {
 		}	
 	}
 	
-	@FXML
-	private ComboBox<String> genders;
-	
-	@FXML
-	private ComboBox<String> semesters;
-	
-	@FXML
-	private ComboBox<String> programs;
-
-	private ObservableList<String> genderChoices = FXCollections.observableArrayList("Male", "Female");
-	private ObservableList<String> semesterChoices = FXCollections.observableArrayList("Fall", "Summer", "Spring");
-	private ObservableList<String> programChoices = FXCollections.observableArrayList("Master of science (MS)", "Master of business administration (MBA)",
-			"Doctor of philosophy (PhD)");
-
-	public void initialize() {
-	    genders.setItems(genderChoices);
-	    semesters.setItems(semesterChoices);
-	    programs.setItems(programChoices);
-	}
 	
 }
