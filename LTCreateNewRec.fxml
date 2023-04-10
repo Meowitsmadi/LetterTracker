@@ -8,7 +8,9 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.CheckMenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -128,9 +130,18 @@
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin></ComboBox>
-                  <ComboBox fx:id="personalChar" prefWidth="150.0" promptText="- select -" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <ComboBox fx:id="academicChar" prefWidth="150.0" promptText="- select -" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <ComboBox fx:id="courses" prefWidth="150.0" promptText="- select -" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <SplitMenuButton fx:id="personalChar" mnemonicParsing="false" text="- select -" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <items>
+                    </items>
+                  </SplitMenuButton>
+                  <SplitMenuButton fx:id="academicChar" mnemonicParsing="false" text="- select -" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                    <items>
+                    </items>
+                  </SplitMenuButton>
+                  <SplitMenuButton fx:id="courses" mnemonicParsing="false" text="- select -" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                    <items>
+                    </items>
+                  </SplitMenuButton>
                </children>
             </GridPane>
             <ButtonBar layoutX="117.0" layoutY="404.0" prefHeight="40.0" prefWidth="200.0" />
