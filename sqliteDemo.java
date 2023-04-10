@@ -1,6 +1,10 @@
 package sql;
 
 import java.sql.*;
+import java.util.ArrayList;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class sqliteDemo {
 	
@@ -44,7 +48,7 @@ public class sqliteDemo {
 		try {
 			String sql = "CREATE TABLE IF NOT EXISTS " + tableName +
 					"(id INTEGER PRIMARY KEY," +
-					" info TEXT)";
+					" info TEXT UNIQUE)";
 			
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:" + dbName + ".db");
@@ -84,6 +88,24 @@ public class sqliteDemo {
 		}
 	} 
 	
+	public static ArrayList<String> getAllData(String table) {
+		ArrayList<String> tableValues = new ArrayList<>();
+		try {
+			java.sql.Statement stm1 = c.createStatement();
+	        java.sql.ResultSet result1 = null;
+			result1 = stm1.executeQuery("select * from "+table);
+			while(result1.next())
+			{
+			       // System.out.println(2);
+			        tableValues.add(result1.getString(2));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} //table information query
+        return tableValues;
+      }
+	
 	public static void PopulateInitialData() throws SQLException {
 		// initialize database
 		createDatabase("letterTrackerInfo.db");
@@ -96,9 +118,13 @@ public class sqliteDemo {
 		createTable("letterTrackerInfo", "programs");
 		createTable("letterTrackerInfo", "personalChara");
 		createTable("letterTrackerInfo", "academicChara");
-		
+		createTable("letterTrackerInfo", "gender");
+			    
 		// initialize user login info
 		InsertData("userInfo", "p");
+		
+		InsertData("gender", "Male");
+		InsertData("gender", "Female");
 		
 		// initialize faculty data in database
 		InsertData("userData", "Ahmad  Yazdankhah");
@@ -144,8 +170,5 @@ public class sqliteDemo {
 
 	}
 	
-	public static void main(String[] args) throws Exception{
-		
-	}
 	
 }
