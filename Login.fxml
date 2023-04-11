@@ -3,7 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -31,14 +31,14 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <TextField fx:id="txtPassword" opacity="0.72" prefHeight="51.0" prefWidth="515.0" promptText="Default Password is &quot;p&quot;">
+            <PasswordField fx:id="txtPassword" opacity="0.72" prefHeight="51.0" prefWidth="515.0" promptText="Default Password is &quot;p&quot;">
                <VBox.margin>
                   <Insets bottom="30.0" left="60.0" right="60.0" top="10.0" />
                </VBox.margin>
                <font>
                   <Font size="20.0" />
                </font>
-            </TextField>
+            </PasswordField>
             <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="458.0">
                <children>
                   <Label fx:id="isConnected" alignment="CENTER" contentDisplay="BOTTOM" prefHeight="20.0" prefWidth="437.0" textAlignment="CENTER" textFill="RED">
