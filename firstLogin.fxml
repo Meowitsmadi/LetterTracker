@@ -30,6 +30,19 @@
                         <Font size="30.0" />
                      </font>
                   </Label>
+                  <Label alignment="BOTTOM_RIGHT" layoutX="10.0" layoutY="75.0" prefHeight="45.0" prefWidth="187.0" text="Old Password:">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtOldPassword" layoutX="70.0" layoutY="141.0" opacity="0.72" prefHeight="51.0" prefWidth="380.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="30.0" left="60.0" right="60.0" top="10.0" />
+                     </VBox.margin>
+                  </TextField>
                   <Label alignment="BOTTOM_RIGHT" prefHeight="45.0" prefWidth="187.0" text="New Password:">
                      <font>
                         <Font size="19.0" />
