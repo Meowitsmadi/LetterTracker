@@ -15,6 +15,7 @@ public class PasswordModel {
 		}
 	}
 	
+	// changes the password in the database
 	public static void ChangePassword(String password) throws SQLException {
 		PreparedStatement pst = null;
 		// selects from table where info is our inputed ID and pass
@@ -30,5 +31,24 @@ public class PasswordModel {
 			pst.close();
 		}
 		
+	}
+	// retrieves current password in the database
+	public static String GetOldPassword() throws SQLException {
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		String rv = null;
+		// selects from table where info is our inputed ID and pass
+		String query = "SELECT info FROM userInfo WHERE id = 1"; 
+		try {
+			pst = conn.prepareStatement(query);
+			rs = pst.executeQuery(); //result of query saved in rs
+			rv = rs.getString("info");
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			pst.close();
+		}
+		return rv;
 	}
 }
