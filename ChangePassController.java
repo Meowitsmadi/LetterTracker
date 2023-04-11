@@ -10,6 +10,7 @@ import javafx.scene.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.*;
+import sql.sqliteDemo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
@@ -22,19 +23,22 @@ public class ChangePassController {
 	public PasswordModel passwordModel = new PasswordModel();
 	
 	@FXML
+	private TextField txtOldPassword; // text field where user enters new password
+	@FXML
 	private TextField txtNewPassword; // text field where user enters new password
 	@FXML
 	private TextField txtConfirmPassword; // text field where user confirms password
 	
 	@FXML private Label status;
 	
-	//Saves the new password into the DB, restricts them from resetting to default password again, and checks confirmation
 	@FXML
 	public void SaveNewPassword(ActionEvent event) throws IOException, SQLException {
+		// checks if the new pasword is the default or not
 		if (txtNewPassword.getText().equals("p")) {
 			status.setText("You cannot use the default password again");
 		}
-		else if (txtNewPassword.getText().equals(txtConfirmPassword.getText()))
+		// checks if old password maatches teh one in the database AND new passwords amtch one another
+		else if (txtOldPassword.getText().equals(PasswordModel.GetOldPassword()) && txtNewPassword.getText().equals(txtConfirmPassword.getText()))
 		{
 			//change pass to inputed text
 			PasswordModel.ChangePassword(txtNewPassword.getText());
@@ -45,6 +49,10 @@ public class ChangePassController {
 			root = loader.load();
 			SceneController sceneController = loader.getController();
 			sceneController.switchToLoginScene(event);
+		}
+		// what to do if old password does not match the one in the database
+		else if(!txtOldPassword.getText().equals(PasswordModel.GetOldPassword())) {
+			status.setText("Incorrect Old Password");
 		}
 		else
 		{
