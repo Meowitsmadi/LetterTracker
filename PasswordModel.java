@@ -37,7 +37,7 @@ public class PasswordModel {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		String rv = null;
-		// selects from table where info is our inputed ID and pass
+		// finds current password
 		String query = "SELECT info FROM userInfo WHERE id = 1"; 
 		try {
 			pst = conn.prepareStatement(query);
