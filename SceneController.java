@@ -127,9 +127,9 @@ public class SceneController implements Initializable {
 	}
 	
 	// Method switches the scene to the Create New LOR page when the create new recommendation button is clicked
-	public void switchToNewLORScene(ActionEvent event) throws IOException{
+	public void switchToHomeScene1(ActionEvent event) throws IOException{
 		
-		root = FXMLLoader.load(getClass().getResource("/view/LTCreateNewRec.fxml"));
+		root = FXMLLoader.load(getClass().getResource("/view/LThomepage.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
