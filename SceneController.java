@@ -126,6 +126,16 @@ public class SceneController implements Initializable {
 		}
 	}
 	
+	// Method switches the scene to the Create New LOR page when the create new recommendation button is clicked
+	public void switchToNewLORScene(ActionEvent event) throws IOException{
+		
+		root = FXMLLoader.load(getClass().getResource("/view/LTCreateNewRec.fxml"));
+		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+	}
+	
 	// Method that switches to the reset password scene
 	public void GoResetPassword(ActionEvent event) throws IOException {
 		root = FXMLLoader.load(getClass().getResource("/view/firstLogin.fxml"));
