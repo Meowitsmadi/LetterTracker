@@ -111,10 +111,7 @@ public class SceneController implements Initializable {
 	@FXML
 	public void switchToLoginScene(ActionEvent event) throws IOException, SQLException{
 		root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
-		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+		changeScene(event);
 	}
 	
 	// Method that switches to the home scene
@@ -123,90 +120,53 @@ public class SceneController implements Initializable {
 		Login(event); // check if PW is correct
 		if (isConnected.getText().equals("Login success")) {
 			root = FXMLLoader.load(getClass().getResource("/view/LThomepage.fxml"));
-			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-			scene = new Scene(root);
-			stage.setScene(scene);
-			stage.show();
+			changeScene(event);
 		}
 	}
 	
 	// Method switches the scene to the Create New LOR page when the create new recommendation button is clicked
-	public void switchToHomeScene1(ActionEvent event) throws IOException{
-			
+	public void switchToHomeScene1(ActionEvent event) throws IOException{	
 		root = FXMLLoader.load(getClass().getResource("/view/LThomepage.fxml"));
-		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+		changeScene(event);
 	}
 	
 	// Method that switches to the reset password scene
 	public void GoResetPassword(ActionEvent event) throws IOException {
 		root = FXMLLoader.load(getClass().getResource("/view/firstLogin.fxml"));
-		stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+		changeScene(event);
 	}
 	
 	// Method switches the scene to home page view when the reset password button is clicked
 	public void switchToResetPWScene(ActionEvent event) throws IOException{
 		root = FXMLLoader.load(getClass().getResource("/view/LThomepage.fxml"));
-		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+		changeScene(event);
 	}
 	
 	// Method switches the scene to the Create New LOR page when the create new recommendation button is clicked
 	public void switchToNewLORScene(ActionEvent event) throws IOException{
 		
 		root = FXMLLoader.load(getClass().getResource("/view/LTCreateNewRec.fxml"));
+		changeScene(event);
+	}
+	
+	public void switchToSaveScene(ActionEvent event) throws IOException{
+		root = FXMLLoader.load(getClass().getResource("/view/NewLOR.fxml"));
+		changeScene(event);
+	}
+	private void changeScene(ActionEvent event) {
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
 	}
-	
-	
+	public void save(ActionEvent event) throws IOException{
+		//sqliteDemo.saveLOR();
+		this.switchToHomeScene1(event);
+	}
+
 	// Method initializes the combo boxes in the Create New Recommendation page by populating them with their respective data from the database
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		genders.setItems(FXCollections.observableArrayList(sqliteDemo.getAllData("gender")));
-		semesters.setItems(FXCollections.observableArrayList(sqliteDemo.getAllData("semester")));
-		programs = ManageDataLORController.setAddData(programs, "programs");
-		courses = ManageDataLORController.setAddData(courses, "courses");
-		personalChar = ManageDataLORController.setAddData(personalChar, "personalChara");
-		academicChar = ManageDataLORController.setAddData(academicChar, "academicChara");
-		
-		table_info_app = table_info;
-		
-		//column_course.setCellValueFactory(new PropertyValueFactory<>("course"));
-		//column_grade.setCellValueFactory(new PropertyValueFactory<>("grade"));
-		
-		//loadData();
-		data_table=FXCollections.observableArrayList();
-		
-		//column_course.setCellFactory(TextFieldTableCell.forTableColumn());
-	    //column_course.setOnEditCommit(e->e.getTableView().getItems().get(e.getTablePosition().getRow()).setCourse(e.getNewValue()));
-
-	    //column_grade.setCellFactory(TextFieldTableCell.forTableColumn());
-	    //column_grade.setOnEditCommit(e->e.getTableView().getItems().get(e.getTablePosition().getRow()).setGrade(e.getNewValue()));
-	    
-	    //table_info.setEditable(true); 
-		
+		sqliteDemo.setOptions(genders, semesters, programs, courses, personalChar, academicChar);	
 	}
-	
-	private void loadData(){
-	    data_table=FXCollections.observableArrayList();
-
-	    for(int x=1;x< 12;x++){
-
-	    /* Generates the data items in the table */
-	    data_table.add(new StudentGrade("course "+x,"grade "+x));
-	    }
-
-	    table_info.setItems(data_table);
-	}
-
 }
