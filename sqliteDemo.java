@@ -170,5 +170,14 @@ public class sqliteDemo {
 
 	}
 	
-	
+	public static void setOptions(ComboBox<String> genders, ComboBox<String> semesters, ComboBox<String> programs,
+			CheckListView<String> courses, CheckListView<String> personalChar, CheckListView<String> academicChar) {
+		genders.setItems(FXCollections.observableArrayList(sqliteDemo.getAllData("gender")));
+		semesters.setItems(FXCollections.observableArrayList(sqliteDemo.getAllData("semester")));
+		programs = ManageDataLORController.setAddData(programs, "programs");
+		courses = ManageDataLORController.setAddData(courses, "courses");
+		personalChar = ManageDataLORController.setAddData(personalChar, "personalChara");
+		academicChar = ManageDataLORController.setAddData(academicChar, "academicChara");
+		
+	}
 }
