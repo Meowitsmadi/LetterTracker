@@ -41,48 +41,40 @@ public class SceneController implements Initializable {
 	/* Initializes Combo Boxes for the gender, semester, programs, personal characteristics, academic characteristics, and courses
 	   in the Create New Recommendation page */
 	
-	@FXML
-	private ComboBox<String> genders = new ComboBox<String>();
+	@FXML private ComboBox<String> genders = new ComboBox<String>();
+	@FXML private ComboBox<String> semesters = new ComboBox<String>();
+	@FXML private ComboBox<String> programs = new ComboBox<String>();
+	@FXML private CheckListView<String> personalChar = new CheckListView<String>();
+	@FXML private CheckListView<String> academicChar = new CheckListView<String>();
+	@FXML private CheckListView<String> courses = new CheckListView<String>();
 	
-	@FXML
-	private ComboBox<String> semesters = new ComboBox<String>();
-	
-	@FXML
-	private ComboBox<String> programs = new ComboBox<String>();
-	
-	@FXML
-	private CheckListView<String> personalChar = new CheckListView<String>();
-	
-	@FXML
-	private CheckListView<String> academicChar = new CheckListView<String>();
-	
-	@FXML
-	private CheckListView<String> courses = new CheckListView<String>();
-	
-	@FXML
-    	private TableView<StudentGrade> fullCoursesView = new TableView<StudentGrade>();
-	
-	@FXML
-    	private Button updateButton;
+	@FXML private TableView<StudentGrade> fullCoursesView = new TableView<StudentGrade>();
+	@FXML private Button updateButton;
 	
 	public static TableView<StudentGrade> table_info_app;
-	
 	public static ObservableList<StudentGrade> data_table;
 	
-	@FXML
-	private TableColumn<StudentGrade, String> col_course = new TableColumn<StudentGrade, String>();
+	@FXML private TableColumn<StudentGrade, String> col_course = new TableColumn<StudentGrade, String>();
+	@FXML private TableColumn<StudentGrade, TextField> col_grade = new TableColumn<StudentGrade, TextField>();
 	
-	@FXML
-	private TableColumn<StudentGrade, TextField> col_grade = new TableColumn<StudentGrade, TextField>();
+	// TableView setup for displaying the search results
+	@FXML private TableView<Student> ResultsTable = new TableView<Student>();
+	@FXML private TableColumn<Student, String> studentFNColumn = new TableColumn<Student, String>();
+	@FXML private TableColumn<Student, String> studentLNColumn = new TableColumn<Student, String>();
+	@FXML private TableColumn<Student, Integer> studentIDColumn = new TableColumn<Student, Integer>();
+	@FXML private Text ResultsLabel;
+	@FXML public TextField searchBar = new TextField();
+	public String searchedName = null;
+	private StringProperty searchText = new SimpleStringProperty("");
 	
+	private ObservableList<Student> studentData;
+	private ObservableList<Student> studentList;
 	
 	// Text field containing password inputed by user
-	@FXML 
-	private TextField txtPassword; 
+	@FXML private TextField txtPassword; 
 	
 	// Label displaying login status of user
-	@FXML
-	private Label isConnected;
+	@FXML private Label isConnected;
 	
 	// Method that handles user login and authentication
 	public void Login(ActionEvent event) throws IOException {
@@ -204,6 +196,68 @@ public class SceneController implements Initializable {
 	    //fullCoursesView.getColumns().addAll(col_course, col_grade);
 	    System.out.println(data_table);
 	}
+	
+	public class Student {
+		private IntegerProperty id = new SimpleIntegerProperty();
+		private StringProperty firstName;
+		private StringProperty lastName = new SimpleStringProperty();
+		
+		public Student(int id, String firstName, String lastName) {
+        	this.id = new SimpleIntegerProperty(id);
+            this.firstName = new SimpleStringProperty(firstName);
+            this.lastName = new SimpleStringProperty(lastName);
+        }
+        public Student() {}
+		
+		public IntegerProperty idProperty() { 
+	         if (id == null) id = new SimpleIntegerProperty(this, "id");
+	         return id; 
+	     }
+		public int getId() { return idProperty().get(); }
+		public void setId(int value) { idProperty().set(value); }
+		
+		public StringProperty firstNameProperty() { 
+	         if (firstName == null) firstName = new SimpleStringProperty(this, "firstName");
+	         return firstName; 
+	     }
+		public String getFirstName() { return firstNameProperty().get(); }
+		public void setFirstName(String value) { firstNameProperty().set(value); }
+		
+		public StringProperty lastNameProperty() { 
+	         if (lastName == null) lastName = new SimpleStringProperty(this, "lastName");
+	         return lastName; 
+	     }
+		public String getLasttName() { return lastNameProperty().get(); }
+		public void setLastName(String value) { lastNameProperty().set(value); }
+		        
+        
+	}
+	
+	public ObservableList<Student> getData(String searchedName) throws SQLException, IOException {
+		studentData = FXCollections.observableArrayList();
+		Connection conn = DriverManager.getConnection("jdbc:sqlite:letterTrackerInfo.db");
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		
+		// selects from recommendation students
+		String query = "SELECT * FROM recommendations WHERE LastName = ?";
+		try {
+			pst = conn.prepareStatement(query);
+			pst.setString(1, searchedName); // selects when searchedName = LastName in DB
+			rs = pst.executeQuery();
+			while (rs.next()) { //there exists an entry
+				Student student = new Student(rs.getInt("ID"), rs.getString("FirstName"), rs.getString("LastName"));
+				studentData.add(student); // adding student into list
+			}
+		}		
+		catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			pst.close();
+			rs.close();
+		}
+		return studentData;
+	}
 
 	// Method initializes the combo boxes in the Create New Recommendation page by populating them with their respective data from the database
 	@Override
@@ -213,5 +267,14 @@ public class SceneController implements Initializable {
 		table_info_app = fullCoursesView;
 		col_course.setCellValueFactory(new PropertyValueFactory<>("course"));
         	col_grade.setCellValueFactory(new PropertyValueFactory<>("grade"));
+		
+		searchText.bind(searchBar.textProperty());
+	    		searchBar.textProperty().addListener((observable, oldValue, newValue) -> {
+	    		    searchedName = newValue;
+	    		});
+	    		
+	    	studentIDColumn.setCellValueFactory(new PropertyValueFactory<Student, Integer>("id"));
+	    	studentFNColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("firstName"));
+	  	studentLNColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("lastName"));
 	}
 }
