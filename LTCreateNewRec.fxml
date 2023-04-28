@@ -121,7 +121,7 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Button>
-                  <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                  <TableView fx:id="fullCoursesView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
                     <columns>
                       <TableColumn fx:id="col_course" prefWidth="75.0" text="course" />
                       <TableColumn fx:id="col_grade" prefWidth="75.0" text="grade" />
@@ -130,6 +130,7 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
+                  <Button fx:id="updateButton" alignment="CENTER" layoutX="452.0" layoutY="277.0" mnemonicParsing="false" onAction="#updateCourses" text="Update" GridPane.columnIndex="2" GridPane.rowIndex="8" />
                </children>
             </GridPane>
             <Text layoutX="600.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Characteristics:" textAlignment="CENTER" wrappingWidth="90.00002431869507" />
