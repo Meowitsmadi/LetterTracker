@@ -59,12 +59,21 @@ public class SceneController implements Initializable {
 	@FXML
 	private CheckListView<String> courses = new CheckListView<String>();
 	
+	@FXML
+    	private TableView<StudentGrade> fullCoursesView = new TableView<StudentGrade>();
+	
+	@FXML
+    	private Button updateButton;
+	
 	public static TableView<StudentGrade> table_info_app;
+	
 	public static ObservableList<StudentGrade> data_table;
+	
 	@FXML
-	private TableView<StudentGrade> table_info;
+	private TableColumn<StudentGrade, String> col_course = new TableColumn<StudentGrade, String>();
+	
 	@FXML
-	private TableColumn<StudentGrade, String> column_course,column_grade;
+	private TableColumn<StudentGrade, TextField> col_grade = new TableColumn<StudentGrade, TextField>();
 	
 	
 	// Text field containing password inputed by user
@@ -163,10 +172,46 @@ public class SceneController implements Initializable {
 		//sqliteDemo.saveLOR();
 		this.switchToHomeScene1(event);
 	}
+	
+	public class StudentGrade {
+		private String course;
+		private TextField grade;
+		
+		public StudentGrade(String course, TextField grade) {
+			this.course = course;
+			this.grade = grade;
+		}
+		
+		public TextField getGrade() {
+			return grade;
+		}
+		
+		public String getCourse() {
+			return course;
+		}
+		
+	}
+	
+	public void updateCourses(ActionEvent event) throws IOException{
+		data_table=FXCollections.observableArrayList();
+	    
+	    for (String course : courses.getCheckModel().getCheckedItems()) {
+            data_table.add(new StudentGrade(course, new TextField()));
+        }
+	    
+	    System.out.println(data_table);
+	    fullCoursesView.setItems(data_table);
+	    //fullCoursesView.getColumns().addAll(col_course, col_grade);
+	    System.out.println(data_table);
+	}
 
 	// Method initializes the combo boxes in the Create New Recommendation page by populating them with their respective data from the database
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		sqliteDemo.setOptions(genders, semesters, programs, courses, personalChar, academicChar);	
+		sqliteDemo.setOptions(genders, semesters, programs, courses, personalChar, academicChar);
+		
+		table_info_app = fullCoursesView;
+		col_course.setCellValueFactory(new PropertyValueFactory<>("course"));
+        	col_grade.setCellValueFactory(new PropertyValueFactory<>("grade"));
 	}
 }
