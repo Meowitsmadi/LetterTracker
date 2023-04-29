@@ -61,6 +61,9 @@ public class SceneController implements Initializable {
 	@FXML private TableView<Student> ResultsTable = new TableView<Student>();
 	@FXML private TableColumn<Student, String> studentFNColumn = new TableColumn<Student, String>();
 	@FXML private TableColumn<Student, String> studentLNColumn = new TableColumn<Student, String>();
+	@FXML private TableColumn<Student, Button> studentViewColumn = new TableColumn<Student, Button>();
+	@FXML private TableColumn<Student, Button> studentEditColumn = new TableColumn<Student, Button>();
+	@FXML private TableColumn<Student, Button> studentDeleteColumn = new TableColumn<Student, Button>();
 	@FXML private Text ResultsLabel;
 	@FXML public TextField searchBar = new TextField();
 	public String searchedName = null;
