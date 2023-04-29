@@ -29,9 +29,11 @@
                <children>
                   <TableView fx:id="ResultsTable" prefHeight="371.0" prefWidth="1139.0">
                     <columns>
-                      <TableColumn fx:id="studentIDColumn" prefWidth="75.0" text="ID" />
                       <TableColumn fx:id="studentFNColumn" prefWidth="75.0" text="FirstName" />
                         <TableColumn fx:id="studentLNColumn" prefWidth="75.0" text="LastName" />
+                        <TableColumn fx:id="studentViewColumn" prefWidth="75.0" text="View" />
+                        <TableColumn fx:id="studentEditColumn" prefWidth="75.0" text="Edit" />
+                        <TableColumn fx:id="studentDeleteColumn" prefWidth="75.0" text="Delete" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -43,7 +45,7 @@
                <font>
                   <Font size="16.0" />
                </font></Button>
-            <Text fx:id="ResultsLabel" layoutX="41.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Results For: " wrappingWidth="206.28017807006836">
+            <Text fx:id="ResultsLabel" layoutX="31.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Results For: " wrappingWidth="823.2801780700684">
                <font>
                   <Font size="25.0" />
                </font></Text>
