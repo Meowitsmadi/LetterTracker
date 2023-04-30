@@ -59,11 +59,10 @@ public class SceneController implements Initializable {
 	
 	// TableView setup for displaying the search results
 	@FXML private TableView<Student> ResultsTable = new TableView<Student>();
+	@FXML private TableColumn<Student, Integer> studentIDColumn = new TableColumn<Student, Integer>();
 	@FXML private TableColumn<Student, String> studentFNColumn = new TableColumn<Student, String>();
 	@FXML private TableColumn<Student, String> studentLNColumn = new TableColumn<Student, String>();
-	@FXML private TableColumn<Student, Button> studentViewColumn = new TableColumn<Student, Button>();
-	@FXML private TableColumn<Student, Button> studentEditColumn = new TableColumn<Student, Button>();
-	@FXML private TableColumn<Student, Button> studentDeleteColumn = new TableColumn<Student, Button>();
+	
 	@FXML private Text ResultsLabel;
 	@FXML public TextField searchBar = new TextField();
 	public String searchedName = null;
@@ -302,6 +301,7 @@ public class SceneController implements Initializable {
 	    		    searchedName = newValue;
 	    		});
 	    		
+		studentIDColumn.setCellValueFactory(new PropertyValueFactory<Student, Integer>("id"));
 	    	studentFNColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("firstName"));
 	  	studentLNColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("lastName"));
 	}
