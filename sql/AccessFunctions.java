@@ -85,14 +85,26 @@ public class AccessFunctions {
 		return studentData.get(0);
 	}
 	
-	public static void EditRecommendation(int entryID) throws SQLException, IOException {
+	public static void EditRecommendation(Student s, int entryID) throws SQLException, IOException {
 		// switch to create new lor BUT without the new
+		String last = s.getLastName();
+		String first = s.getFirstName();
+		Connection conn = DriverManager.getConnection("jdbc:sqlite:letterTrackerInfo.db");
+		Statement pst = null;
 		
-		
-	}
-	
-	public static void ViewRecommendation(int entryID) throws SQLException, IOException {
-		// switch to save page but modified
+		// selects from recommendation students
+		String query1 = "UPDATE recommendations SET lastName = ? WHERE id = "+entryID+";";
+		String query2 = "UPDATE recommendations SET firstName = ? WHERE id = "+entryID+";";
+		try {
+			pst = conn.createStatement();
+			pst.executeUpdate(query1);
+			pst.executeUpdate(query2);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			pst.close();
+		}
 	}
 	
 }
