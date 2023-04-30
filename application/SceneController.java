@@ -251,23 +251,23 @@ public class SceneController implements Initializable {
 		}
 	}
 	
-	public void EditEntry(ActionEvent event) throws SQLException, IOException {
-		int id = 0;
+	public void switchToEditLORScene(ActionEvent event) throws SQLException, IOException {
 		ObservableList<Student> selectedRow = ResultsTable.getSelectionModel().getSelectedItems();
-		id = selectedRow.get(0).getId();
+		ID = selectedRow.get(0).getId();
 		root = FXMLLoader.load(getClass().getResource("/view/EditLOR.fxml"));
 		changeScene(event);
-		AccessFunctions.EditRecommendation(id);
+	}
+	
+	public void EditLOR(ActionEvent event) throws SQLException, IOException {
+		AccessFunctions.EditRecommendation(student,ID);
 	}
 	
 	public void ViewEntry(ActionEvent event) throws SQLException, IOException {
-		int id = 0;
 		ObservableList<Student> selectedRow = ResultsTable.getSelectionModel().getSelectedItems();
-		id = selectedRow.get(0).getId();
+		student = selectedRow.get(0);
 		root = FXMLLoader.load(getClass().getResource("/view/ViewLOR.fxml"));
 		changeScene(event);
-		// return me the correct rec : getData -ish but with ID returns Student
-		// String lor = Student.toString();
+		String lor = student.toString();
 		// populate textfield
 	}
 	
