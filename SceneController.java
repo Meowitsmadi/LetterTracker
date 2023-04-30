@@ -199,6 +199,12 @@ public class SceneController implements Initializable {
 	    System.out.println(data_table);
 	}
 	
+	public void switchToResults(ActionEvent event) throws IOException, SQLException{
+		ResultsLabel.setText("Results For: " + searchBar.getText());
+		ObservableList<Student> studentList = getData(searchedName);
+		ResultsTable.setItems(studentList);
+	}
+	
 	public class Student {
 		private IntegerProperty id;
 		private StringProperty firstName;
