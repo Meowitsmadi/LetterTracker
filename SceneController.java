@@ -200,9 +200,9 @@ public class SceneController implements Initializable {
 	}
 	
 	public class Student {
-		private IntegerProperty id = new SimpleIntegerProperty();
+		private IntegerProperty id;
 		private StringProperty firstName;
-		private StringProperty lastName = new SimpleStringProperty();
+		private StringProperty lastName;
 		
 		public Student(int id, String firstName, String lastName) {
         	this.id = new SimpleIntegerProperty(id);
@@ -259,6 +259,27 @@ public class SceneController implements Initializable {
 			rs.close();
 		}
 		return studentData;
+	}
+	
+	public void DeleteEntry(ActionEvent event) throws SQLException, IOException {
+		int id = 0;
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Confirm Deletion");
+		alert.setContentText("Delete the LOR for: " + searchedName + "?");
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK)
+		{
+			//get selected row
+			ObservableList<Student> tableItems, selectedRow;
+			tableItems = ResultsTable.getItems();
+			selectedRow = ResultsTable.getSelectionModel().getSelectedItems();
+			for (Student student: selectedRow) //get ID of selected row
+			{
+				id = student.getId();
+			}
+			selectedRow.forEach(tableItems::remove); // remove from ResultsTable
+			ResultFunctions.DeleteRecommendation(id); // remove from DB
+		}
 	}
 
 	// Method initializes the combo boxes in the Create New Recommendation page by populating them with their respective data from the database
