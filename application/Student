@@ -1,5 +1,7 @@
 package application;
 
+import java.util.ArrayList;
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -9,11 +11,34 @@ public class Student {
 	private IntegerProperty id;
 	private StringProperty firstName;
 	private StringProperty lastName;
+	private String gender;
+	private String firstSem;
+	private String program;
+	private String targetSchool;
+	private String currentDate;
+	private ArrayList<String> course;
+	ArrayList<String> courseGrade;
+	private ArrayList<String> personalChar;
+	private ArrayList<String> academicChar;
 	
 	public Student(int id, String firstName, String lastName) {
     	this.id = new SimpleIntegerProperty(id);
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
+		if(gender.equals("Male")) {
+			this.gender = "He";
+		}
+		else {
+			this.gender = "She";
+		}
+		this.firstSem = firstSem;
+		this.program = program;
+		this.targetSchool = targetSchool;
+		this.currentDate = currentDate;
+		this.course = course;
+		this.courseGrade = courseGrade;
+		this.personalChar = personalChar;
+		this.academicChar = academicChar;
     }
 	
     public Student() {}
@@ -36,8 +61,143 @@ public class Student {
          if (lastName == null) lastName = new SimpleStringProperty(this, "lastName");
          return lastName; 
      }
-	public String getLasttName() { return lastNameProperty().get(); }
+	public String getLastName() { return lastNameProperty().get(); }
 	public void setLastName(String value) { lastNameProperty().set(value); }
 	        
-    
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	
+	public String getGender() {
+		return gender;
+	}
+	
+	public void setFirstSem(String firstSem) {
+		this.firstSem = firstSem;
+	}
+	
+	public String getFirstSem() {
+		return firstSem;
+	}
+	
+	public void setProgram(String program) {
+		this.program = program;
+	}
+	
+	public String getProgram() {
+		return program;
+	}
+	
+	public void setTargetSchool(String targetSchool) {
+		this.targetSchool = targetSchool;
+	}
+	
+	public String getTargetSchool() {
+		return targetSchool;
+	}
+	
+	public void setCurrentDate(String currentDate) {
+		this.currentDate = currentDate;
+	}
+	
+	public String getCurrentDate() {
+		return currentDate;
+	}
+	
+	public void setCourse(ArrayList<String> course) {
+		this.course = course;
+	}
+	
+	public ArrayList<String> getCourse() {
+		return course;
+	}
+	
+	public void setCourseGrade(ArrayList<String> courseGrade) {
+		this.courseGrade = courseGrade;
+	}
+	
+	public ArrayList<String> getCourseGrade() {
+		return courseGrade;
+	}
+	
+	public void setPersonalChar(ArrayList<String> personalChar) {
+		this.personalChar = personalChar;
+	}
+	
+	public ArrayList<String> getPersonalChar() {
+		return personalChar;
+	}
+	
+	public void setAcademicChar(ArrayList<String> academicChar) {
+		this.academicChar = academicChar;
+	}
+	
+	public ArrayList<String> getAcademicChar() {
+		return academicChar;
+	}
+	
+	public String formatCourse() {
+		String out ="";
+		int i = 1;
+		out += String.format("%s also earned ", gender);
+		while(i<course.size()) {
+			if(i!=course.size()-1) { 
+				out+=String.format("%s from my %s, ", courseGrade.get(i), course.get(i));
+			}
+			else { out+=String.format("and %s from my %s", courseGrade.get(i), course.get(i)); }
+			i++;
+		}
+		return out+".\n";
+	}
+	
+	public String formatAcaChara() {
+		String out = String.format("%s %s",firstName, academicChar.get(0));
+		for(int i=1; i<academicChar.size();i++) {
+			if(i!=course.size()-1) { 
+				out+= String.format("%s, ", academicChar.get(i));
+			}
+			else { out+= String.format("and %s", academicChar.get(i)); }	
+		}
+		return out+".\n\n";
+		
+	}
+	
+	public String formatPerChara() {
+		String out = String.format("%s was always %s", gender, personalChar.get(0));
+		for(int i=1; i<personalChar.size();i++) {
+			if(i!=course.size()-1) { 
+				out+= String.format("%s, ", personalChar.get(i));
+			}
+			else { out+= String.format("and %s.\n", personalChar.get(i)); }	
+		}
+		return out+".\n\n";
+		
+	}
+	
+	public String toString() {
+		String out = String.format(""
+				+ "Letter of Recommendation\r\n\n"
+				+ "For: %s %s\r\n"
+				+ "Date: %s\r\n"
+				+ "To: Graduate Admissions Committee\r\n\n"
+				+ "I am writing this letter to recommend my former student %s %s who is applying for the\r\n"
+				+ "%s program in your school. \r\n\n"
+				+ "I met %s in %s when he enrolled in my \"%s\" course.\r\n\n"
+				+ "%s earned \"%s\" from this tough course, and this shows how knowledgeable and hard worker %s is. \r\n", getFirstName(), getLastName(), currentDate, getFirstName(), getLastName(), 
+				   program, getFirstName(), firstSem, course.get(0), getFirstName(), courseGrade.get(0), gender.toLowerCase());
+		if(course.size()>1) {
+			out+= formatCourse();
+		}
+		out+=formatAcaChara();
+		out+=formatPerChara();
+		
+		out+= String.format("Furthermore, I noticed from the term project result, %s developed leadership, time \r\n"
+				+ "management, and problem-solving skills. %s worked effectively with the team members and \r\n"
+				+ "delegated tasks appropriately. They were able to deliver a successful project in a timely fashion.\r\n\n"
+				+ "I believe that %s has the capacity to excel at higher education program and this \r\n"
+				+ "is my pleasure to highly recommend him. \r\n\n"
+				+ "Please do not hesitate to contact me with further questions.\r\n\n\n\n"
+				+ "Very Respectfully,", gender.toLowerCase(), gender, getFirstName());
+		return out;
+	}
 }
