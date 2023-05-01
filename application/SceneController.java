@@ -92,6 +92,8 @@ public class SceneController implements Initializable {
 	private Label isConnected;
 	
 	private int ID = 0;
+	private Student student = null;
+	@FXML Button saveBtn = new Button();
 	
 	// Method that handles user login and authentication
 	public void Login(ActionEvent event) throws IOException {
@@ -157,6 +159,14 @@ public class SceneController implements Initializable {
 	
 	// Method switches the scene to the Create New LOR page when the create new recommendation button is clicked
 	public void switchToNewLORScene(ActionEvent event) throws IOException{
+		saveBtn.setOnAction(e -> {
+			try {
+				save(event);
+			} catch (IOException | SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 		root = FXMLLoader.load(getClass().getResource("/view/LTCreateNewRec.fxml"));
 		changeScene(event);
 	}
@@ -167,8 +177,13 @@ public class SceneController implements Initializable {
 	}
 	
 	public void switchToSaveScene(ActionEvent event) throws IOException{
+		// call FormatRec fr = new FormatRec(parameters)
+		// String lor = fr.tostring()
+		// student = new Student(fr.getFirstName(), fr.getlastName(), lor);
 		root = FXMLLoader.load(getClass().getResource("/view/NewLOR.fxml"));
 		changeScene(event);
+		
+		lorText.setText("");
 	}
 	
 	public void updateHomePage(ActionEvent event) throws IOException, SQLException{
@@ -183,7 +198,8 @@ public class SceneController implements Initializable {
 		stage.show();
 	}
 	public void save(ActionEvent event) throws IOException{
-		//sqliteDemo.saveLOR();
+		// get data from Student class
+		sqliteDemo.InsertRecData("recommendations", student.getFirstName(), student.getLastName(), student.getLOR());
 		this.switchToHomeScene1(event);
 	}
 
@@ -253,22 +269,36 @@ public class SceneController implements Initializable {
 	
 	public void switchToEditLORScene(ActionEvent event) throws SQLException, IOException {
 		ObservableList<Student> selectedRow = ResultsTable.getSelectionModel().getSelectedItems();
-		ID = selectedRow.get(0).getId();
-		root = FXMLLoader.load(getClass().getResource("/view/EditLOR.fxml"));
-		changeScene(event);
+		if(!selectedRow.isEmpty()) {
+			ID = selectedRow.get(0).getId();
+			root = FXMLLoader.load(getClass().getResource("/view/EditLOR.fxml"));
+			changeScene(event);
+			saveBtn.setOnAction(e -> {
+				try {
+					EditLOR(event);
+				} catch (IOException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			});
+		}
 	}
 	
 	public void EditLOR(ActionEvent event) throws SQLException, IOException {
 		AccessFunctions.EditRecommendation(student,ID);
+		this.switchToHomeScene1(event);
 	}
 	
-	public void ViewEntry(ActionEvent event) throws SQLException, IOException {
+	public void switchToViewScene(ActionEvent event) throws SQLException, IOException {
 		ObservableList<Student> selectedRow = ResultsTable.getSelectionModel().getSelectedItems();
-		student = selectedRow.get(0);
-		root = FXMLLoader.load(getClass().getResource("/view/ViewLOR.fxml"));
-		changeScene(event);
-		String lor = student.toString();
-		// populate textfield
+		if(!selectedRow.isEmpty()) {
+			ID = selectedRow.get(0).getId();
+			student = AccessFunctions.getData(ID);
+			root = FXMLLoader.load(getClass().getResource("/view/ViewLOR.fxml"));
+			String lor = student.toString();
+			lorText.setText(lor);
+			changeScene(event);
+		}
 	}
 	
 	// Method initializes the combo boxes in the Create New Recommendation page by populating them with their respective data from the database
