@@ -44,19 +44,19 @@
                <font>
                   <Font size="25.0" />
                </font></Text>
-            <Button layoutX="832.0" layoutY="63.0" mnemonicParsing="false" onAction="#switchToResults" prefHeight="37.0" prefWidth="78.0" text="Search">
+            <Button layoutX="832.0" layoutY="63.0" mnemonicParsing="false" onAction="#updateHomePage" prefHeight="37.0" prefWidth="78.0" text="Search">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
             <ButtonBar layoutX="853.0" layoutY="630.0" prefHeight="66.0" prefWidth="315.0">
               <buttons>
-                <Button fx:id="viewBtn" mnemonicParsing="false" prefHeight="37.0" prefWidth="78.0" text="View">
+                <Button fx:id="viewBtn" mnemonicParsing="false" onAction="#switchToViewScene" prefHeight="37.0" prefWidth="78.0" text="View">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="editBtn" mnemonicParsing="false" prefHeight="37.0" prefWidth="78.0" text="Edit">
+                  <Button fx:id="editBtn" mnemonicParsing="false" onAction="#switchToEditLORScene" prefHeight="37.0" prefWidth="78.0" text="Edit">
                      <font>
                         <Font size="16.0" />
                      </font>
