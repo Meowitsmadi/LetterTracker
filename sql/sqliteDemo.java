@@ -65,6 +65,32 @@ public class sqliteDemo {
    		}
 	}
 	
+	// create table exclusively for recommendations.
+	public static void createRecTable(String dbName) {
+		c = null;
+		Statement st = null;
+		try {
+			String sql = "CREATE TABLE IF NOT EXISTS recommendations" +
+					"(id INTEGER PRIMARY KEY," +
+					" firstName TEXT," +
+					" lastName TEXT," +
+					" LOR TEXT)";
+				
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:" + dbName + ".db");
+			System.out.println("Database Opened...\n");
+			st = c.createStatement();
+			
+			st.executeUpdate(sql);
+			st.close();
+			c.close();
+			System.out.println("recommendations was created successfully.");
+		}
+		catch(Exception e){
+	    	System.out.println(e);
+	   	}
+	}
+	
 	public static void InsertData(String table, String data) throws SQLException {
 		c = DriverManager.getConnection("jdbc:sqlite:letterTrackerInfo.db");
 		Statement st = null;
@@ -85,6 +111,23 @@ public class sqliteDemo {
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
+		}
+	} 
+	
+	public static void InsertRecData(String table, String firstName, String lastName, String LOR) throws SQLException {
+	c = DriverManager.getConnection("jdbc:sqlite:letterTrackerInfo.db");
+	Statement st = null;
+	String test = "";
+	test = "INSERT OR IGNORE INTO "+table+"(firstName, lastName, LOR) VALUES(\""+ firstName +"\", \""+ lastName +"\", \""+ LOR +"\")";
+	try {
+		st = c.createStatement();
+		st.execute(test);
+		st.close();
+		c.close();
+		
+		}
+	catch (SQLException e) {
+		e.printStackTrace();
 		}
 	} 
 	
