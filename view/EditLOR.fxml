@@ -65,7 +65,7 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-            <Text layoutX="467.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create New Recommendation" textAlignment="CENTER" wrappingWidth="264.5623779296875">
+            <Text layoutX="467.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Recommendation" textAlignment="CENTER" wrappingWidth="264.5623779296875">
                <font>
                   <Font size="20.0" />
                </font>
@@ -137,7 +137,7 @@
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
          <children>
             <Button mnemonicParsing="false" onAction="#switchToHomeScene1" prefHeight="43.0" prefWidth="150.0" style="-fx-background-color: lightseagreen;" text="Back" textFill="WHITE" />
-            <Button layoutX="62.0" layoutY="10.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="150.0" style="-fx-background-color: lightseagreen;" text="Save" textFill="WHITE" />
+            <Button layoutX="62.0" layoutY="10.0" mnemonicParsing="false" onAction="#switchToSaveScene" prefHeight="43.0" prefWidth="150.0" style="-fx-background-color: lightseagreen;" text="Save" textFill="WHITE" />
          </children>
       </HBox>
   </children>
