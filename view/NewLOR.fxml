@@ -13,7 +13,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="save" layoutX="852.0" layoutY="679.0" mnemonicParsing="false" onAction="#save" prefHeight="35.0" prefWidth="64.0" text="Save">
+      <Button fx:id="saveBtn" layoutX="852.0" layoutY="679.0" mnemonicParsing="false" onAction="#EditLOR" prefHeight="35.0" prefWidth="64.0" text="Save">
          <font>
             <Font size="18.0" />
          </font>
@@ -23,7 +23,7 @@
             <Font size="40.0" />
          </font>
       </Label>
-      <TextField fx:id="text" layoutX="175.0" layoutY="173.0" prefHeight="453.0" prefWidth="829.0" />
+      <TextField fx:id="lorText" layoutX="175.0" layoutY="173.0" prefHeight="453.0" prefWidth="829.0" />
       <Label layoutX="689.0" layoutY="643.0" prefHeight="27.0" prefWidth="286.0" text="Would you like to save this letter?">
          <font>
             <Font size="18.0" />
