@@ -1,0 +1,57 @@
+package application;
+
+import java.io.IOException;
+import java.sql.SQLException;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+
+public class LoginController extends SceneController{
+	// Text field containing password inputed by user
+		@FXML 
+		private TextField txtPassword; 
+		
+		// Label displaying login status of user
+		@FXML
+		private Label isConnected;
+		
+		// Method that handles user login and authentication
+		public void Login(ActionEvent event) throws IOException {
+			try {
+				// if password in DB does not equal p meaning not first time, but user enters p again, decline
+				if ((txtPassword.getText().equals("p")) && (!loginModel.checkLogin(1, "p")))
+				{
+					isConnected.setText("You cannot use the default PW again");
+				}
+				else if (txtPassword.getText().equals("p")) {
+					GoResetPassword(event);
+				}
+				// check if inputed password = DB password	
+				else if (loginModel.checkLogin(1, txtPassword.getText())) 
+				{ isConnected.setText("Login success");	}
+				
+				else if (txtPassword.getText().isEmpty()) 
+				{ isConnected.setText("Please enter a password"); }
+				
+				else
+				{ isConnected.setText("Login fail"); }	
+			}
+			catch (SQLException e) {
+				isConnected.setText("Login fail");
+				e.printStackTrace();
+			}
+		}
+		
+		// Method that switches to the home scene
+		@FXML
+		public void switchToHomeScene(ActionEvent event) throws IOException, SQLException{
+			Login(event); // check if PW is correct
+			if (isConnected.getText().equals("Login success")) {
+				root = FXMLLoader.load(getClass().getResource("/view/LThomepage.fxml"));
+				super.changeScene(event);
+			}
+		}
+}
