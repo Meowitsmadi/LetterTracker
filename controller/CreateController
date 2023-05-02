@@ -1,0 +1,118 @@
+package application;
+
+import java.io.IOException;
+import java.net.URL;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
+import org.controlsfx.control.CheckListView;
+
+import application.SceneController.StudentGrade;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import sql.sqliteDemo;
+
+public class CreateController extends SceneController{
+	// Initializes text fields for first name, last name, first year, target school, and date
+	
+		@FXML private TextField firstName;
+		@FXML private TextField lastName;
+		@FXML private TextField firstYear;
+		@FXML private TextField targetSchool;
+		@FXML private DatePicker currentDate;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+		
+		/* Initializes Combo Boxes for the gender, semester, programs, personal characteristics, academic characteristics, and courses
+		   in the Create New Recommendation page */
+		
+		@FXML private ComboBox<String> genders;
+		@FXML private ComboBox<String> semesters;
+		@FXML private ComboBox<String> programs;
+		@FXML private CheckListView<String> personalChar;
+		@FXML private CheckListView<String> academicChar;
+		@FXML private CheckListView<String> courses;
+		
+		// Initializes TableView, Columns, Button, and data lists needed for displaying the courses and grades as well as retrieving their data
+		
+		@FXML private TableView<StudentGrade> fullCoursesView;
+		@FXML private Button updateButton;
+		public static TableView<StudentGrade> table_info_app;
+		public static ObservableList<StudentGrade> data_table;
+		@FXML private TableView<StudentGrade> table_info;
+		@FXML private TableColumn<StudentGrade, String> col_course;
+		@FXML private TableColumn<StudentGrade, TextField> col_grade;
+		
+		public void switchToSaveScene(ActionEvent event) throws IOException{
+			FormatRec fr = new FormatRec(firstName.getText(), lastName.getText(), genders.getValue(), semesters.getValue(), programs.getValue(), targetSchool.getText(),
+					firstYear.getText(), currentDate.getValue().format(formatter), getCoursesFromCoursesTable(), getGradesFromCoursesTable(), personalCharsArrList(), academicCharsArrList());
+			String lor = fr.toString();
+			student = new Student(fr.getFirstName(), fr.getLastName(), lor);
+			root = FXMLLoader.load(getClass().getResource("/view/NewLOR.fxml"));
+			changeScene(event);
+			lorText.setText(lor);
+			
+		}
+		
+		public void updateCourses(ActionEvent event) throws IOException{
+			data_table=FXCollections.observableArrayList();
+		    
+		    for (String course : courses.getCheckModel().getCheckedItems()) {
+	            data_table.add(new StudentGrade(course, new TextField()));
+	        }
+		    
+		    fullCoursesView.setItems(data_table);
+		    
+		}
+		
+		public ArrayList<String> getCoursesFromCoursesTable() {
+		    ArrayList<String> courses = new ArrayList<String>();
+		    for (StudentGrade sg : fullCoursesView.getItems()) {
+		        courses.add(sg.getCourse());
+		    }
+		    return courses;
+		}
+
+		public ArrayList<String> getGradesFromCoursesTable() {
+		    ArrayList<String> grades = new ArrayList<String>();
+		    for (StudentGrade sg : fullCoursesView.getItems()) {
+		        TextField gradeField = sg.getGrade();
+		        String gradeText = gradeField.getText();
+		        grades.add(gradeText);
+		    }
+		    return grades;
+		}
+		public ArrayList<String> personalCharsArrList() {
+			ArrayList<String> personalCharsArrList = new ArrayList<String>();
+			for (String pChar : personalChar.getCheckModel().getCheckedItems()) {
+				personalCharsArrList.add(pChar);
+	        }
+			return personalCharsArrList;
+		}
+		
+		public ArrayList<String> academicCharsArrList() {
+			ArrayList<String> academicCharsArrList = new ArrayList<String>();
+			for (String aChar : academicChar.getCheckModel().getCheckedItems()) {
+				academicCharsArrList.add(aChar);
+	        }
+			return academicCharsArrList;
+		}
+		
+		public void initialize(URL location, ResourceBundle resources) {
+			sqliteDemo.setOptions(genders, semesters, programs, courses, personalChar, academicChar);
+			
+			//table_info_app = fullCoursesView;
+			col_course.setCellValueFactory(new PropertyValueFactory<>("course"));
+	        col_grade.setCellValueFactory(new PropertyValueFactory<>("grade"));	
+		}
+}
