@@ -1,19 +1,20 @@
-package application;
+package controller;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 
-public class ViewController extends SceneController{
-	@FXML
-	private Button back;
+public class ViewController extends SceneController implements Initializable{
 	
 	@FXML
-	static TextArea viewLorText;
+	private TextArea viewLorText;
 	
 	public void EditOrCreate(ActionEvent event) throws SQLException, IOException{
 		if(isEdit) {
@@ -22,5 +23,15 @@ public class ViewController extends SceneController{
 		else {
 			save(event);
 		}
+	}
+	
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub
+		String lor = student.toString();
+		System.out.println(lor);
+
+		viewLorText.setText(lor);
+		
 	}
 }
