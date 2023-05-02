@@ -3,8 +3,12 @@ package sql;
 import java.sql.*;
 import java.util.ArrayList;
 
+import org.controlsfx.control.CheckListView;
+
+import application.ManageDataLORController;
+import application.Student;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 
 public class sqliteDemo {
 	
@@ -66,30 +70,40 @@ public class sqliteDemo {
 	}
 	
 	// create table exclusively for recommendations.
-	public static void createRecTable(String dbName) {
-		c = null;
-		Statement st = null;
-		try {
-			String sql = "CREATE TABLE IF NOT EXISTS recommendations" +
-					"(id INTEGER PRIMARY KEY," +
-					" firstName TEXT," +
-					" lastName TEXT," +
-					" LOR TEXT)";
+		public static void createRecTable(String dbName) {
+			c = null;
+			Statement st = null;
+			try {
+				String sql = "CREATE TABLE IF NOT EXISTS recommendations" +
+						"(id INTEGER PRIMARY KEY," +
+						" firstName TEXT," +
+						" lastName TEXT," +
+						" gender TEXT," +
+						" firstSem TEXT," +
+						" program TEXT," +
+						" targetSchool TEXT," +
+						" firstYear TEXT," +
+						" currentDate TEXT," +
+						" courses TEXT," +
+						" courseGrades TEXT," +
+						" personalChar TEXT," +
+						" academicChar TEXT," +
+						" LOR TEXT)";
+					
+				Class.forName("org.sqlite.JDBC");
+				c = DriverManager.getConnection("jdbc:sqlite:" + dbName + ".db");
+				System.out.println("Database Opened...\n");
+				st = c.createStatement();
 				
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:" + dbName + ".db");
-			System.out.println("Database Opened...\n");
-			st = c.createStatement();
-			
-			st.executeUpdate(sql);
-			st.close();
-			c.close();
-			System.out.println("recommendations was created successfully.");
+				st.executeUpdate(sql);
+				st.close();
+				c.close();
+				System.out.println("recommendations was created successfully.");
+			}
+			catch(Exception e){
+		    	System.out.println(e);
+		   	}
 		}
-		catch(Exception e){
-	    	System.out.println(e);
-	   	}
-	}
 	
 	public static void InsertData(String table, String data) throws SQLException {
 		c = DriverManager.getConnection("jdbc:sqlite:letterTrackerInfo.db");
@@ -114,22 +128,37 @@ public class sqliteDemo {
 		}
 	} 
 	
-	public static void InsertRecData(String table, String firstName, String lastName, String LOR) throws SQLException {
-	c = DriverManager.getConnection("jdbc:sqlite:letterTrackerInfo.db");
-	Statement st = null;
-	String test = "";
-	test = "INSERT OR IGNORE INTO "+table+"(firstName, lastName, LOR) VALUES(\""+ firstName +"\", \""+ lastName +"\", \""+ LOR +"\")";
-	try {
-		st = c.createStatement();
-		st.execute(test);
-		st.close();
-		c.close();
-		
-		}
-	catch (SQLException e) {
-		e.printStackTrace();
-		}
-	} 
+	// inserts data from student's form into the DB
+		public static void InsertRecData(Student s) throws SQLException {
+			c = DriverManager.getConnection("jdbc:sqlite:letterTrackerInfo.db");
+			PreparedStatement pst = null;
+			
+			String query = "INSERT OR IGNORE INTO recommendations(firstName, lastName, gender, firstSem, program, targetSchool, firstYear, currentDate,"
+						+ " courses, courseGrades, personalChar, academicChar, LOR) "
+							+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			try {
+				pst = c.prepareStatement(query);
+				pst.setString(1,s.getFirstName());
+				pst.setString(2,s.getLastName());
+				pst.setString(3,s.getGender()); 
+				pst.setString(4,s.getFirstSem());
+				pst.setString(5,s.getProgram()); 
+				pst.setString(6,s.getTargetSchool());
+				pst.setString(7,s.getFirstYear());
+				pst.setString(8,s.getCurrentDate()); 
+				pst.setString(9,s.getCourses()); 
+				pst.setString(10,s.getCourseGrades()); 
+				pst.setString(11,s.getPersonalChar()); 
+				pst.setString(12,s.getAcademicChar());
+				pst.setString(13,s.toString()); 
+				pst.executeUpdate();
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				pst.close();
+			}
+		} 
 	
 	public static ArrayList<String> getAllData(String table) {
 		ArrayList<String> tableValues = new ArrayList<>();
@@ -162,6 +191,7 @@ public class sqliteDemo {
 		createTable("letterTrackerInfo", "personalChara");
 		createTable("letterTrackerInfo", "academicChara");
 		createTable("letterTrackerInfo", "gender");
+		createRecTable("letterTrackerInfo");
 			    
 		// initialize user login info
 		InsertData("userInfo", "p");
