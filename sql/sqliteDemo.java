@@ -87,7 +87,7 @@ public class sqliteDemo {
 					" courses TEXT," +
 					" courseGrades TEXT," +
 					" personalChar TEXT," +
-					" academicChar TEXT)" +
+					" academicChar TEXT" +
 					" LOR TEXT)";
 				
 			Class.forName("org.sqlite.JDBC");
