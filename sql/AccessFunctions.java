@@ -87,6 +87,37 @@ public class AccessFunctions {
 		return studentData.get(0);
 	}
 	
+	// inserts data from student's form into the DB
+	public static void InsertFormData(Student s) throws SQLException {
+		Connection conn = DriverManager.getConnection("jdbc:sqlite:letterTrackerInfo.db");
+		PreparedStatement pst = null;
+		
+		String query = "INSERT OR IGNORE INTO recommendations(firstName, lastName, gender, firstSem, program, targetSchool, firstYear, currentDate,"
+					+ " courses, courseGrades, personalChar, academicChar) "
+						+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		try {
+			pst = conn.prepareStatement(query);
+			pst.setString(1,s.getFirstName());
+			pst.setString(2,s.getLastName());
+			pst.setString(3,s.getGender()); 
+			pst.setString(4,s.getFirstSem());
+			pst.setString(5,s.getProgram()); 
+			pst.setString(6,s.getTargetSchool());
+			pst.setString(7,s.getFirstYear());
+			pst.setString(8,s.getCurrentDate()); 
+			pst.setString(9,s.getCourses()); 
+			pst.setString(10,s.getCourseGrades()); 
+			pst.setString(11,s.getPersonalChar()); 
+			pst.setString(12,s.getAcademicChar()); 
+			pst.executeUpdate();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			pst.close();
+		}
+	}
+	
 	public static void EditRecommendation(Student s, int entryID) throws SQLException, IOException {
 		// switch to create new lor BUT without the new
 		System.out.println("first");
