@@ -1,12 +1,8 @@
-package application;
+package controller;
 
 // Importing necessary libraries
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -23,24 +19,23 @@ import javafx.scene.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 
 import org.controlsfx.control.CheckListView;
+
+import application.LoginModel;
+import application.Student;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import javafx.stage.*;
 import sql.AccessFunctions;
 import sql.sqliteDemo;
-import application.Student;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.text.Text;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -50,108 +45,30 @@ public class SceneController implements Initializable {
 	
 	
 	// Declaring necessary variables for creating create pages and login
-	private Stage stage;
-	private Scene scene;
-	private Parent root;
+	static Stage stage;
+	static Scene scene;
+	static Parent root;
 	public LoginModel loginModel = new LoginModel();
+	static Student student = new Student();
+
 	
-	// Initializes text fields for first name, last name, first year, target school, and date
-	
-	@FXML private TextField firstName = new TextField();
-	@FXML private TextField lastName = new TextField();
-	@FXML private TextField firstYear = new TextField();
-	@FXML private TextField targetSchool = new TextField();
-	@FXML private DatePicker currentDate = new DatePicker();
-	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-	
-	/* Initializes Combo Boxes for the gender, semester, programs, personal characteristics, academic characteristics, and courses
-	   in the Create New Recommendation page */
-	
-	@FXML private ComboBox<String> genders = new ComboBox<String>();
-	@FXML private ComboBox<String> semesters = new ComboBox<String>();
-	@FXML private ComboBox<String> programs = new ComboBox<String>();
-	@FXML private CheckListView<String> personalChar = new CheckListView<String>();
-	@FXML private CheckListView<String> academicChar = new CheckListView<String>();
-	@FXML private CheckListView<String> courses = new CheckListView<String>();
-	
-	// Initializes TableView, Columns, Button, and data lists needed for displaying the courses and grades as well as retrieving their data
-	
-	@FXML private TableView<StudentGrade> fullCoursesView = new TableView<StudentGrade>();
-	@FXML private Button updateButton;
-	public static TableView<StudentGrade> table_info_app;
-	public static ObservableList<StudentGrade> data_table;
-	@FXML private TableView<StudentGrade> table_info;
-	@FXML private TableColumn<StudentGrade, String> col_course = new TableColumn<StudentGrade, String>();
-	@FXML private TableColumn<StudentGrade, TextField> col_grade = new TableColumn<StudentGrade, TextField>();
-	
-	@FXML private TableView<Student> ResultsTable = new TableView<Student>();
-	@FXML private Button sr;
-	private ObservableList<Student> studentData;
-	@FXML private TableColumn<Student, String> studentFNColumn = new TableColumn<Student, String>();
-	@FXML private TableColumn<Student, String> studentLNColumn = new TableColumn<Student, String>();
-	@FXML private TableColumn<Student, Integer> studentIDColumn = new TableColumn<Student, Integer>();
-	
-	@FXML private Text ResultsLabel;
-	public static Text staticResultsLabel;
-	@FXML public TextField searchBar = new TextField();
-	public String searchedName;
-	private StringProperty searchText = new SimpleStringProperty("");
-	
-	// Text field containing password inputed by user
-	@FXML 
-	private TextField txtPassword; 
-	
-	// Label displaying login status of user
+	static int ID = 0;
+	static boolean isEdit = false;
 	@FXML
-	private Label isConnected;
+	Button saveBtn = new Button();
+	@FXML
+	private static TextArea viewLorText = new TextArea();
+	@FXML
+	static TextArea lorText = new TextArea();
+	@FXML
+	Button back = new Button();
 	
-	private int ID = 0;
-	private Student student = null;
-	@FXML Button saveBtn = new Button();
-	@FXML TextField lorText = new TextField();
-	
-	// Method that handles user login and authentication
-	public void Login(ActionEvent event) throws IOException {
-		try {
-			// if password in DB does not equal p meaning not first time, but user enters p again, decline
-			if ((txtPassword.getText().equals("p")) && (!loginModel.checkLogin(1, "p")))
-			{
-				isConnected.setText("You cannot use the default PW again");
-			}
-			else if (txtPassword.getText().equals("p")) {
-				GoResetPassword(event);
-			}
-			// check if inputed password = DB password	
-			else if (loginModel.checkLogin(1, txtPassword.getText())) 
-			{ isConnected.setText("Login success");	}
-			
-			else if (txtPassword.getText().isEmpty()) 
-			{ isConnected.setText("Please enter a password"); }
-			
-			else
-			{ isConnected.setText("Login fail"); }	
-		}
-		catch (SQLException e) {
-			isConnected.setText("Login fail");
-			e.printStackTrace();
-		}
-	}
 	
 	// Method that switches to the login scene
 	@FXML
 	public void switchToLoginScene(ActionEvent event) throws IOException, SQLException{
 		root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
 		changeScene(event);
-	}
-	
-	// Method that switches to the home scene
-	@FXML
-	public void switchToHomeScene(ActionEvent event) throws IOException, SQLException{
-		Login(event); // check if PW is correct
-		if (isConnected.getText().equals("Login success")) {
-			root = FXMLLoader.load(getClass().getResource("/view/LThomepage.fxml"));
-			changeScene(event);
-		}
 	}
 	
 	// Method switches the scene to the Create New LOR page when the create new recommendation button is clicked
@@ -174,41 +91,12 @@ public class SceneController implements Initializable {
 	
 	// Method switches the scene to the Create New LOR page when the create new recommendation button is clicked
 	public void switchToNewLORScene(ActionEvent event) throws IOException, SQLException{
-		saveBtn.setOnAction(e -> {
-			try {
-				save(event);
-			} catch (IOException | SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		});
+		isEdit = false;
 		root = FXMLLoader.load(getClass().getResource("/view/LTCreateNewRec.fxml"));
 		changeScene(event);
 	}
 	
-	public void switchToResults(ActionEvent event) throws IOException, SQLException{
-		ResultsLabel.setText("Results For: " + searchBar.getText());
-		updateResults(event, searchBar.getText());
-	}
-	
-	public void switchToSaveScene(ActionEvent event) throws IOException{
-		FormatRec fr = new FormatRec(firstName.getText(), lastName.getText(), genders.getValue(), semesters.getValue(), programs.getValue(), targetSchool.getText(),
-				firstYear.getText(), currentDate.getValue().format(formatter), getCoursesFromCoursesTable(), getGradesFromCoursesTable(), personalCharsArrList(), academicCharsArrList());
-		String lor = fr.toString();
-		System.out.println(lor);
-		lorText.setText(lor);
-		student = new Student(fr.getFirstName(), fr.getLastName(), lor);
-		root = FXMLLoader.load(getClass().getResource("/view/NewLOR.fxml"));
-		changeScene(event);
-		
-	}
-	
-	public void updateHomePage(ActionEvent event) throws IOException, SQLException{
-		ResultsLabel.setText("Results For: " + searchBar.getText());
-		ObservableList<Student> studentList = AccessFunctions.getData(searchedName);
-		ResultsTable.setItems(studentList);
-	}
-	private void changeScene(ActionEvent event) {
+	void changeScene(ActionEvent event) {
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -239,133 +127,21 @@ public class SceneController implements Initializable {
 		
 	}
 	
-	public void updateResults(ActionEvent event, String input) throws IOException, SQLException{
-		studentData = AccessFunctions.getData(input);
-	    System.out.println(studentData);
-	    ResultsTable.setItems(studentData);
-	    System.out.println(studentData);
-	}
-	
-	public void updateCourses(ActionEvent event) throws IOException{
-		data_table=FXCollections.observableArrayList();
-	    
-	    for (String course : courses.getCheckModel().getCheckedItems()) {
-            data_table.add(new StudentGrade(course, new TextField()));
-        }
-	    
-	    fullCoursesView.setItems(data_table);
-	    
-	}
-	
-	public ArrayList<String> getCoursesFromCoursesTable() {
-	    ArrayList<String> courses = new ArrayList<String>();
-	    for (StudentGrade sg : fullCoursesView.getItems()) {
-	        courses.add(sg.getCourse());
-	    }
-	    return courses;
-	}
-
-	public ArrayList<String> getGradesFromCoursesTable() {
-	    ArrayList<String> grades = new ArrayList<String>();
-	    for (StudentGrade sg : fullCoursesView.getItems()) {
-	        TextField gradeField = sg.getGrade();
-	        String gradeText = gradeField.getText();
-	        grades.add(gradeText);
-	    }
-	    return grades;
-	}
-	
-	public ArrayList<String> personalCharsArrList() {
-		ArrayList<String> personalCharsArrList = new ArrayList<String>();
-		for (String pChar : personalChar.getCheckModel().getCheckedItems()) {
-			personalCharsArrList.add(pChar);
-        }
-		return personalCharsArrList;
-	}
-	
-	public ArrayList<String> academicCharsArrList() {
-		ArrayList<String> academicCharsArrList = new ArrayList<String>();
-		for (String aChar : academicChar.getCheckModel().getCheckedItems()) {
-			academicCharsArrList.add(aChar);
-        }
-		return academicCharsArrList;
-	}
-	
-	
-	public void DeleteEntry(ActionEvent event) throws SQLException, IOException {
-		// get selected row
-		ObservableList<Student> tableItems, selectedRow;
-		tableItems = ResultsTable.getItems();
-		selectedRow = ResultsTable.getSelectionModel().getSelectedItems();
-		
-		if(!selectedRow.isEmpty()) {
-			int id = 0;
-			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-			alert.setTitle("Confirm Deletion");
-			alert.setContentText("Delete the LOR for: " + searchedName + "?");
-			Optional<ButtonType> result = alert.showAndWait();
-			if (result.get() == ButtonType.OK)
-			{
-				for (Student student: selectedRow) //get ID of selected row
-				{
-					id = student.getId();
-				}
-				selectedRow.forEach(tableItems::remove); // remove from ResultsTable
-				AccessFunctions.DeleteRecommendation(id); // remove from DB
-			}
-		}
-	}
-	
-	public void switchToEditLORScene(ActionEvent event) throws SQLException, IOException {
-		ObservableList<Student> selectedRow = ResultsTable.getSelectionModel().getSelectedItems();
-		if(!selectedRow.isEmpty()) {
-			ID = selectedRow.get(0).getId();
-			root = FXMLLoader.load(getClass().getResource("/view/EditLOR.fxml"));
-			changeScene(event);
-			saveBtn.setOnAction(e -> {
-				try {
-					EditLOR(event);
-				} catch (IOException | SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			});
-		}
-	}
-	
 	public void EditLOR(ActionEvent event) throws SQLException, IOException {
 		AccessFunctions.EditRecommendation(student,ID);
 		this.switchToHomeScene1(event);
 	}
 	
-	public void switchToViewScene(ActionEvent event) throws SQLException, IOException {
-		ObservableList<Student> selectedRow = ResultsTable.getSelectionModel().getSelectedItems();
-		if(!selectedRow.isEmpty()) {
-			ID = selectedRow.get(0).getId();
-			student = AccessFunctions.getData(ID);
-			root = FXMLLoader.load(getClass().getResource("/view/ViewLOR.fxml"));
-			String lor = student.toString();
-			lorText.setText(lor);
-			changeScene(event);
-		}
+	public void updateTextArea(String lor) {
+		viewLorText.setText("hi");
+		System.out.println(viewLorText.getText());
+		back.setText("WAAAAAAAAA");
+	}
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub
+		
 	}
 	
-	// Method initializes the combo boxes in the Create New Recommendation page by populating them with their respective data from the database
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		sqliteDemo.setOptions(genders, semesters, programs, courses, personalChar, academicChar);
-		
-		//table_info_app = fullCoursesView;
-		col_course.setCellValueFactory(new PropertyValueFactory<>("course"));
-        col_grade.setCellValueFactory(new PropertyValueFactory<>("grade"));
-        
-        searchText.bind(searchBar.textProperty());
-		searchBar.textProperty().addListener((observable, oldValue, newValue) -> {
-		    searchedName = newValue;
-		});
-		
-		studentIDColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
-		studentFNColumn.setCellValueFactory(new PropertyValueFactory<>("FirstName"));
-		studentLNColumn.setCellValueFactory(new PropertyValueFactory<>("LastName"));
-	}
 }
