@@ -128,40 +128,37 @@ public class sqliteDemo {
 		}
 	} 
 	
-	public static void InsertRecData(String table, String firstName, String lastName, String LOR) throws SQLException {
-	c = DriverManager.getConnection("jdbc:sqlite:letterTrackerInfo.db");
-	Statement st = null;
-	String test = "";
-	test = "INSERT OR IGNORE INTO "+table+"(firstName, lastName, LOR) VALUES(\""+ firstName +"\", \""+ lastName +"\", \""+ LOR +"\")";
-	try {
-		st = c.createStatement();
-		st.execute(test);
-		st.close();
-		c.close();
-		
-		}
-	catch (SQLException e) {
-		e.printStackTrace();
-		}
-	} 
-	
-	public static ArrayList<String> getAllData(String table) {
-		ArrayList<String> tableValues = new ArrayList<>();
-		try {
-			java.sql.Statement stm1 = c.createStatement();
-	        java.sql.ResultSet result1 = null;
-			result1 = stm1.executeQuery("select * from "+table);
-			while(result1.next())
-			{
-			       // System.out.println(2);
-			        tableValues.add(result1.getString(2));
+	// inserts data from student's form into the DB
+		public static void InsertRecData(Student s) throws SQLException {
+			c = DriverManager.getConnection("jdbc:sqlite:letterTrackerInfo.db");
+			PreparedStatement pst = null;
+			
+			String query = "INSERT OR IGNORE INTO recommendations(firstName, lastName, gender, firstSem, program, targetSchool, firstYear, currentDate,"
+						+ " courses, courseGrades, personalChar, academicChar, LOR) "
+							+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			try {
+				pst = c.prepareStatement(query);
+				pst.setString(1,s.getFirstName());
+				pst.setString(2,s.getLastName());
+				pst.setString(3,s.getGender()); 
+				pst.setString(4,s.getFirstSem());
+				pst.setString(5,s.getProgram()); 
+				pst.setString(6,s.getTargetSchool());
+				pst.setString(7,s.getFirstYear());
+				pst.setString(8,s.getCurrentDate()); 
+				pst.setString(9,s.getCourses()); 
+				pst.setString(10,s.getCourseGrades()); 
+				pst.setString(11,s.getPersonalChar()); 
+				pst.setString(12,s.getAcademicChar());
+				pst.setString(13,s.toString()); 
+				pst.executeUpdate();
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} //table information query
-        return tableValues;
-      }
+			catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				pst.close();
+			}
+		} 
 	
 	public static void PopulateInitialData() throws SQLException {
 		// initialize database
