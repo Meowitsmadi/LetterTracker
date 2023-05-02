@@ -78,6 +78,16 @@ public class sqliteDemo {
 					"(id INTEGER PRIMARY KEY," +
 					" firstName TEXT," +
 					" lastName TEXT," +
+					" gender TEXT," +
+					" firstSem TEXT," +
+					" program TEXT," +
+					" targetSchool TEXT," +
+					" firstYear TEXT," +
+					" currentDate TEXT," +
+					" courses TEXT," +
+					" courseGrades TEXT," +
+					" personalChar TEXT," +
+					" academicChar TEXT)" +
 					" LOR TEXT)";
 				
 			Class.forName("org.sqlite.JDBC");
