@@ -28,7 +28,6 @@ public class HomeController extends SceneController{
 	private ObservableList<Student> studentData;
 	@FXML private TableColumn<Student, String> studentFNColumn = new TableColumn<Student, String>();
 	@FXML private TableColumn<Student, String> studentLNColumn = new TableColumn<Student, String>();
-	@FXML private TableColumn<Student, Integer> studentIDColumn = new TableColumn<Student, Integer>();
 	
 	@FXML private Text ResultsLabel;
 	public static Text staticResultsLabel;
@@ -82,29 +81,26 @@ public class HomeController extends SceneController{
 	public void switchToEditLORScene(ActionEvent event) throws SQLException, IOException {
 		ObservableList<Student> selectedRow = ResultsTable.getSelectionModel().getSelectedItems();
 		if(!selectedRow.isEmpty()) {
+			isEdit = true;
 			ID = selectedRow.get(0).getId();
+			student = AccessFunctions.getData(ID);
 			root = FXMLLoader.load(getClass().getResource("/view/EditLOR.fxml"));
 			changeScene(event);
-			isEdit = true;
 		}
 	}
 	
 	@FXML
 	public void switchToViewScene(ActionEvent event) throws SQLException, IOException {
 		ObservableList<Student> selectedRow = ResultsTable.getSelectionModel().getSelectedItems();
-		//t = new TextArea();
 		if(!selectedRow.isEmpty()) {
 			ID = selectedRow.get(0).getId();
 			student = AccessFunctions.getData(ID);
-			String lor = student.getLOR();
 			root = FXMLLoader.load(getClass().getResource("/view/ViewLOR.fxml"));
-			updateTextArea((lor));
 			changeScene(event);
 		}
 	}
 	
-	// Method initializes the combo boxes in the Create New Recommendation page by populating them with their respective data from the database
-		@Override
+	@Override
 		public void initialize(URL location, ResourceBundle resources) {
 	        
 	        searchText.bind(searchBar.textProperty());
@@ -112,7 +108,6 @@ public class HomeController extends SceneController{
 			    searchedName = newValue;
 			});
 			
-			studentIDColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
 			studentFNColumn.setCellValueFactory(new PropertyValueFactory<>("FirstName"));
 			studentLNColumn.setCellValueFactory(new PropertyValueFactory<>("LastName"));
 			
