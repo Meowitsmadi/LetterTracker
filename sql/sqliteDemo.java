@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import org.controlsfx.control.CheckListView;
 
 import application.ManageDataLORController;
+import application.Student;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 
 public class sqliteDemo {
@@ -70,40 +70,40 @@ public class sqliteDemo {
 	}
 	
 	// create table exclusively for recommendations.
-	public static void createRecTable(String dbName) {
-		c = null;
-		Statement st = null;
-		try {
-			String sql = "CREATE TABLE IF NOT EXISTS recommendations" +
-					"(id INTEGER PRIMARY KEY," +
-					" firstName TEXT," +
-					" lastName TEXT," +
-					" gender TEXT," +
-					" firstSem TEXT," +
-					" program TEXT," +
-					" targetSchool TEXT," +
-					" firstYear TEXT," +
-					" currentDate TEXT," +
-					" courses TEXT," +
-					" courseGrades TEXT," +
-					" personalChar TEXT," +
-					" academicChar TEXT" +
-					" LOR TEXT)";
+		public static void createRecTable(String dbName) {
+			c = null;
+			Statement st = null;
+			try {
+				String sql = "CREATE TABLE IF NOT EXISTS recommendations" +
+						"(id INTEGER PRIMARY KEY," +
+						" firstName TEXT," +
+						" lastName TEXT," +
+						" gender TEXT," +
+						" firstSem TEXT," +
+						" program TEXT," +
+						" targetSchool TEXT," +
+						" firstYear TEXT," +
+						" currentDate TEXT," +
+						" courses TEXT," +
+						" courseGrades TEXT," +
+						" personalChar TEXT," +
+						" academicChar TEXT," +
+						" LOR TEXT)";
+					
+				Class.forName("org.sqlite.JDBC");
+				c = DriverManager.getConnection("jdbc:sqlite:" + dbName + ".db");
+				System.out.println("Database Opened...\n");
+				st = c.createStatement();
 				
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:" + dbName + ".db");
-			System.out.println("Database Opened...\n");
-			st = c.createStatement();
-			
-			st.executeUpdate(sql);
-			st.close();
-			c.close();
-			System.out.println("recommendations was created successfully.");
+				st.executeUpdate(sql);
+				st.close();
+				c.close();
+				System.out.println("recommendations was created successfully.");
+			}
+			catch(Exception e){
+		    	System.out.println(e);
+		   	}
 		}
-		catch(Exception e){
-	    	System.out.println(e);
-	   	}
-	}
 	
 	public static void InsertData(String table, String data) throws SQLException {
 		c = DriverManager.getConnection("jdbc:sqlite:letterTrackerInfo.db");
@@ -159,6 +159,24 @@ public class sqliteDemo {
 				pst.close();
 			}
 		} 
+	
+	public static ArrayList<String> getAllData(String table) {
+		ArrayList<String> tableValues = new ArrayList<>();
+		try {
+			java.sql.Statement stm1 = c.createStatement();
+	        java.sql.ResultSet result1 = null;
+			result1 = stm1.executeQuery("select * from "+table);
+			while(result1.next())
+			{
+			       // System.out.println(2);
+			        tableValues.add(result1.getString(2));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} //table information query
+        return tableValues;
+      }
 	
 	public static void PopulateInitialData() throws SQLException {
 		// initialize database
