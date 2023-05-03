@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -22,7 +22,7 @@
 <?import javafx.scene.text.Text?>
 <?import org.controlsfx.control.CheckListView?>
 
-<VBox prefHeight="750.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SceneController">
+<VBox prefHeight="750.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreateController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -134,6 +134,11 @@
             <Text layoutX="600.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Academic Characteristics:" textAlignment="CENTER" wrappingWidth="90.00002816319466" />
             <CheckListView fx:id="academicChar" layoutX="694.0" layoutY="365.0" prefHeight="203.0" prefWidth="382.0" />
             <CheckListView fx:id="personalChar" layoutX="694.0" layoutY="94.0" prefHeight="214.0" prefWidth="382.0" />
+            <Label fx:id="checkStatus" layoutX="645.0" layoutY="584.0" prefHeight="61.0" prefWidth="311.0" textFill="RED">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
       </children>
     </AnchorPane>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
@@ -144,3 +149,4 @@
       </HBox>
   </children>
 </VBox>
+
