@@ -1,4 +1,4 @@
-package application;
+package controller;
 
 import java.io.IOException;
 import java.net.URL;
@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import application.Student;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
@@ -23,11 +24,11 @@ import javafx.scene.text.Text;
 import sql.AccessFunctions;
 
 public class HomeController extends SceneController{
-	@FXML private TableView<Student> ResultsTable = new TableView<Student>();
+	@FXML private TableView<Student> ResultsTable;
 	@FXML private Button sr;
 	private ObservableList<Student> studentData;
-	@FXML private TableColumn<Student, String> studentFNColumn = new TableColumn<Student, String>();
-	@FXML private TableColumn<Student, String> studentLNColumn = new TableColumn<Student, String>();
+	@FXML private TableColumn<Student, String> studentFNColumn;
+	@FXML private TableColumn<Student, String> studentLNColumn;
 	
 	@FXML private Text ResultsLabel;
 	public static Text staticResultsLabel;
@@ -100,7 +101,8 @@ public class HomeController extends SceneController{
 		}
 	}
 	
-	@Override
+	// Method initializes the combo boxes in the Create New Recommendation page by populating them with their respective data from the database
+		@Override
 		public void initialize(URL location, ResourceBundle resources) {
 	        
 	        searchText.bind(searchBar.textProperty());
@@ -113,3 +115,4 @@ public class HomeController extends SceneController{
 			
 		}
 }
+
