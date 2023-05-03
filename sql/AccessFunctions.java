@@ -7,7 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+import java.util.Arrays;
+import java.util.List;
+import java.util.ArrayList;
 import application.Student;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,12 +51,12 @@ public class AccessFunctions {
 				Student student = new Student(rs.getInt("ID"), rs.getString("FirstName"), rs.getString("LastName"));
 				studentData.add(student); // adding student into list
 			}
+			rs.close();
 		}		
 		catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			pst.close();
-			rs.close();
 		}
 		
 		return studentData;
@@ -70,20 +72,27 @@ public class AccessFunctions {
 		String query = "SELECT * FROM recommendations WHERE ID = ?";
 		try {
 			pst = conn.prepareStatement(query);
-			pst.setInt(0, id); // selects when searchedName = LastName in DB
+			pst.setInt(1, id); // selects when searchedName = LastName in DB
 			rs = pst.executeQuery();
+			List<String> course = Arrays.asList(rs.getString("courses").split("/"));
+			List<String> courseG = Arrays.asList(rs.getString("courseGrades").split("/"));
+			List<String> perC = Arrays.asList(rs.getString("personalChar").split("/"));
+			List<String> acaC = Arrays.asList(rs.getString("academicChar").split("/"));
+			
 			while (rs.next()) { //there exists an entry
-				Student student = new Student(rs.getInt("ID"), rs.getString("FirstName"), rs.getString("LastName"));
+				Student student = new Student(rs.getString("firstName"), rs.getString("lastName"), rs.getString("gender"), rs.getString("firstSem"),
+						rs.getString("program"), rs.getString("targetSchool"), rs.getString("firstYear"), rs.getString("currentDate"), new ArrayList<String>(course),
+						new ArrayList<String>(courseG), new ArrayList<String>(perC), new ArrayList<String>(acaC));
 				studentData.add(student); // adding student into list
 			}
+			rs.close();
 		}		
 		catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			pst.close();
-			rs.close();
 		}
-		
+		System.out.println(studentData.size());
 		return studentData.get(0);
 	}
 	
