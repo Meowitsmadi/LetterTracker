@@ -58,6 +58,19 @@ public class CreateController extends SceneController implements Initializable{
 		@FXML private Label checkStatus;
 		
 		public void switchToSaveScene(ActionEvent event) throws IOException{
+			// if any text field are empty, do not allow user to compile the letter of recommendation
+			if(firstName.getText().isEmpty()) {
+				return;
+			}
+			if(lastName.getText().isEmpty()) {
+				return;
+			}
+			if(firstYear.getText().isEmpty()) {
+				return;
+			}
+			if(targetSchool.getText().isEmpty()) {
+				return;
+			}
 			try {
 				student = new Student(firstName.getText(), lastName.getText(), genders.getValue(), semesters.getValue(), programs.getValue(), targetSchool.getText(),
 		                firstYear.getText(), currentDate.getValue().format(formatter), getCoursesFromCoursesTable(), getGradesFromCoursesTable(), personalCharsArrList(), academicCharsArrList());
