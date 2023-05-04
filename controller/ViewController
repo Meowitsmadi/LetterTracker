@@ -16,6 +16,7 @@ public class ViewController extends SceneController implements Initializable{
 	@FXML
 	private TextArea viewLorText;
 	
+	// checks to see if user is eidint og creating a letter of recommendation
 	public void EditOrCreate(ActionEvent event) throws SQLException, IOException{
 		student.setLor(viewLorText.getText());
 		if(isEdit) {
@@ -24,6 +25,11 @@ public class ViewController extends SceneController implements Initializable{
 		else {
 			save(event);
 		}
+	}
+	
+	// makes sure the form data stays there even after going back to form page
+	public void populatePrevious(ActionEvent event) throws SQLException, IOException{
+		switchBackToNewLORScene(event);
 	}
 	
 	@Override
