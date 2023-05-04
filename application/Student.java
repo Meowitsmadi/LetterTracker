@@ -122,9 +122,9 @@ public class Student {
 			out+=String.format("'%s' from my '%s'", courseGrade.get(i), course.get(i));
 		}
 		else if(i!=course.size()-1){
-			out+=String.format("'%s' from my '%s', ", courseGrade.get(i), course.get(i));	
+			out+=String.format(", '%s' from my '%s'", courseGrade.get(i), course.get(i));	
 		}
-		else { out+=String.format(",and '%s' from my '%s'", courseGrade.get(i), course.get(i)); }
+		else { out+=String.format(", and '%s' from my '%s'", courseGrade.get(i), course.get(i)); }
 		i++;
 	}
 	return out+".\n";
