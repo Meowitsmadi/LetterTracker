@@ -73,6 +73,12 @@ public class SceneController implements Initializable {
 		changeScene(event);
 	}
 	
+	// Method switches the scene back to the Create New LOR page from View page when the create new recommendation button is clicked
+	public void switchBackToNewLORScene(ActionEvent event) throws IOException, SQLException{
+		root = FXMLLoader.load(getClass().getResource("/view/LTCreateNewRec.fxml"));
+		changeScene(event);
+	}
+	
 	void changeScene(ActionEvent event) {
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
