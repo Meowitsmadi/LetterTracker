@@ -33,6 +33,11 @@ public class ChangePassController {
 	
 	@FXML
 	public void SaveNewPassword(ActionEvent event) throws IOException, SQLException {
+		// Base Case: Checks if any fields are empty
+		if(txtNewPassword.getText().isEmpty() || txtOldPassword.getText().isEmpty() || txtConfirmPassword.getText().isEmpty()) {
+			status.setText("One or more of the fields is not filled");
+			return;
+		}
 		// checks if the new pasword is the default or not
 		if (txtNewPassword.getText().equals("p")) {
 			status.setText("You cannot use the default password again");
