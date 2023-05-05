@@ -6,6 +6,7 @@ import sql.sqliteDemo;
 public class PasswordModel {
 	private static Connection conn;
 	
+	// constructor for the password model that connects to the database
 	public PasswordModel() {
 		conn = sqliteDemo.connect();
 		if (conn == null) 
@@ -15,7 +16,7 @@ public class PasswordModel {
 		}
 	}
 	
-	// changes the password in the database
+	// changes the user's password in the database
 	public static void ChangePassword(String password) throws SQLException {
 		PreparedStatement pst = null;
 		// selects from table where info is our inputed ID and pass
