@@ -13,8 +13,10 @@ import javafx.scene.control.TextArea;
 public class ViewController extends SceneController implements Initializable{
 	
 	@FXML
-	private TextArea viewLorText;
+	private TextArea viewLorText; // reference to the text area that shows the compiled letter of recommendation
 	
+	// Method that populates the text area with the letter of recommendation and changes the button function based on if the
+	// user is saving or editing a recommendation.
 	public void EditOrCreate(ActionEvent event) throws SQLException, IOException{
 		student.setLor(viewLorText.getText());
 		if(isEdit) {
@@ -25,11 +27,12 @@ public class ViewController extends SceneController implements Initializable{
 		}
 	}
 	
+	// returns to the previous page
 	public void populatePrevious(ActionEvent event) throws SQLException, IOException{
 		switchBackToNewLORScene(event);
 	}
 	
-	
+	// sets the text area to the letter of recommendation
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
