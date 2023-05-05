@@ -112,6 +112,7 @@ public class Student {
 			{out += AChar + "/";}
 		return out;}
 
+	// formats one or multiple courses in the letter of recommendation
 	public String formatCourse() {
 	String out ="\n";
 	int i = 1;
@@ -129,6 +130,7 @@ public class Student {
 	return out+".\n";
 	}
 
+	// handles one or multiple academic characteristics and the grammar in the letter of recommendation.
 	public String formatAcaChara() {
 		String out = String.format("\n%s %s",firstName.get(), academicChar.get(0));
 		for(int i=1; i<academicChar.size();i++) {
@@ -141,6 +143,7 @@ public class Student {
 	
 	}
 
+	// formats one or multiple personal characteristics and the grammar in the letter of recommendation.
 	public String formatPerChara() {
 		String out = String.format("%s was always %s", gender, personalChar.get(0));
 		for(int i=1; i<personalChar.size();i++) {
@@ -153,6 +156,7 @@ public class Student {
 	
 	}
 	
+	// returns the signature for the letter of recommendation including user data. 
 	public String signature() {
 		ArrayList<String> data = sqliteDemo.getAllData("userData");
 		String out = data.get(0);
@@ -175,6 +179,7 @@ public class Student {
 		return lor;
 	}
 	
+	// returns the recommendation for the student in correct format
 	private String getString() {
 		String out = String.format(""
 			+ "Letter of Recommendation\r\n\n"
