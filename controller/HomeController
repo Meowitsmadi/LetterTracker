@@ -49,9 +49,7 @@ public class HomeController extends SceneController{
 	
 	public void updateResults(ActionEvent event, String input) throws IOException, SQLException{
 		studentData = AccessFunctions.getData(input);
-	    System.out.println(studentData);
 	    ResultsTable.setItems(studentData);
-	    System.out.println(studentData);
 	}
 	
 	
