@@ -21,7 +21,6 @@ public class sqliteDemo {
 		try {
 			Class.forName("org.sqlite.JDBC"); // loading the driver
 			c = DriverManager.getConnection("jdbc:sqlite:letterTrackerInfo.db");
-			System.out.println("SQLite DB connected");
 		}
 		catch(Exception e){
 			System.out.println(e);
@@ -150,7 +149,7 @@ public class sqliteDemo {
 				pst.setString(10,s.getCourseGrades()); 
 				pst.setString(11,s.getPersonalChar()); 
 				pst.setString(12,s.getAcademicChar());
-				pst.setString(13,s.toString()); 
+				pst.setString(13,s.getLor()); 
 				pst.executeUpdate();
 			}
 			catch (SQLException e) {
