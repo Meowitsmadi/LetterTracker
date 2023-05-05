@@ -41,18 +41,20 @@ public class HomeController extends SceneController{
 		updateResults(event, searchBar.getText());
 	}
 	
+	// updates the search label and table with the searched last name
 	public void updateHomePage(ActionEvent event) throws IOException, SQLException{
 		ResultsLabel.setText("Results For: " + searchBar.getText());
 		ObservableList<Student> studentList = AccessFunctions.getData(searchedName);
 		ResultsTable.setItems(studentList);
 	}
 	
+	// updates the search table with the student
 	public void updateResults(ActionEvent event, String input) throws IOException, SQLException{
 		studentData = AccessFunctions.getData(input);
 	    ResultsTable.setItems(studentData);
 	}
 	
-	
+	// deletes the selected student from the list view on the homepage and in the database
 	public void DeleteEntry(ActionEvent event) throws SQLException, IOException {
 		// get selected row
 		ObservableList<Student> tableItems, selectedRow;
@@ -77,6 +79,7 @@ public class HomeController extends SceneController{
 		}
 	}
 	
+	// gets the selected student's id and switches to the editable scene of their letter of recommendation
 	public void switchToEditLORScene(ActionEvent event) throws SQLException, IOException {
 		ObservableList<Student> selectedRow = ResultsTable.getSelectionModel().getSelectedItems();
 		if(!selectedRow.isEmpty()) {
@@ -88,6 +91,7 @@ public class HomeController extends SceneController{
 		}
 	}
 	
+	// gets the selected student's ID and switches to the viewable scene of their letter of recommendation
 	@FXML
 	public void switchToViewScene(ActionEvent event) throws SQLException, IOException {
 		ObservableList<Student> selectedRow = ResultsTable.getSelectionModel().getSelectedItems();
