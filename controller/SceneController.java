@@ -79,18 +79,22 @@ public class SceneController implements Initializable {
 		changeScene(event);
 	}
 	
+	// method to switch to a new scene
 	void changeScene(ActionEvent event) {
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
 	}
+	
+	// saves the inputted form data into the database
 	public void save(ActionEvent event) throws IOException, SQLException{
 		// get data from Student class
 		sqliteDemo.InsertRecData(student);
 		this.switchToHomeScene1(event);
 	}
 
+	// nested class used for implementing a student's grade with corresponding course
 	public class StudentGrade {
 		private String course;
 		private TextField grade;
@@ -110,6 +114,7 @@ public class SceneController implements Initializable {
 		
 	}
 	
+	// method to update recommendation information in the database
 	public void EditLOR(ActionEvent event) throws SQLException, IOException {
 		AccessFunctions.EditRecommendation(student,ID);
 		this.switchToHomeScene1(event);
