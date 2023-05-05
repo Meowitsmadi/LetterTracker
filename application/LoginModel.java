@@ -6,6 +6,7 @@ import sql.sqliteDemo;
 public class LoginModel {
 	Connection conn;
 	
+	// constructor for the login model that connects to the database
 	public LoginModel() {
 		conn = sqliteDemo.connect();
 		if (conn == null) 
