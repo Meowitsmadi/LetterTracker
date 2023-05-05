@@ -2,6 +2,7 @@ package application;
 
 import javafx.scene.control.TextField;
 
+//class used for implementing a student's grade with corresponding course
 public class StudentGrade {
 		private String course;
 		private TextField grade;
