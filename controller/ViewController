@@ -8,7 +8,6 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 
 public class ViewController extends SceneController implements Initializable{
@@ -16,7 +15,6 @@ public class ViewController extends SceneController implements Initializable{
 	@FXML
 	private TextArea viewLorText;
 	
-	// checks to see if user is eidint og creating a letter of recommendation
 	public void EditOrCreate(ActionEvent event) throws SQLException, IOException{
 		student.setLor(viewLorText.getText());
 		if(isEdit) {
@@ -27,16 +25,15 @@ public class ViewController extends SceneController implements Initializable{
 		}
 	}
 	
-	// makes sure the form data stays there even after going back to form page
 	public void populatePrevious(ActionEvent event) throws SQLException, IOException{
 		switchBackToNewLORScene(event);
 	}
+	
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		String lor = student.getLor();
-
 		viewLorText.setText(lor);
 		
 	}
