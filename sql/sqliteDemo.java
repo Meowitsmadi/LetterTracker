@@ -104,6 +104,7 @@ public class sqliteDemo {
 		   	}
 		}
 	
+	// method used to insert the default password for the user OR insert data into tables that have an ID and info values.
 	public static void InsertData(String table, String data) throws SQLException {
 		c = DriverManager.getConnection("jdbc:sqlite:letterTrackerInfo.db");
 		Statement st = null;
@@ -159,6 +160,7 @@ public class sqliteDemo {
 			}
 		} 
 	
+	// selects and returns an arraylist of all data inside a given table
 	public static ArrayList<String> getAllData(String table) {
 		ArrayList<String> tableValues = new ArrayList<>();
 		try {
@@ -176,7 +178,7 @@ public class sqliteDemo {
 		} //table information query
         return tableValues;
       }
-	
+	// initially creates the letterTrackInfo database and its tables
 	public static void PopulateInitialData() throws SQLException {
 		// initialize database
 		createDatabase("letterTrackerInfo.db");
@@ -242,6 +244,7 @@ public class sqliteDemo {
 
 	}
 	
+	// sets the options for the gender, semester, and program drop down menus
 	public static void setOptions(ComboBox<String> genders, ComboBox<String> semesters, ComboBox<String> programs,
 			CheckListView<String> courses, CheckListView<String> personalChar, CheckListView<String> academicChar) {
 		genders.setItems(FXCollections.observableArrayList(sqliteDemo.getAllData("gender")));
