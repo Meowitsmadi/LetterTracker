@@ -57,6 +57,7 @@ public class CreateController extends SceneController implements Initializable{
 		
 		@FXML private Label checkStatus;
 		
+		// button checks if the fields have all been filled out and switches scene if this is true
 		public void switchToSaveScene(ActionEvent event) throws IOException{
 			if(firstName.getText().isEmpty()) {
 				return;
@@ -83,6 +84,7 @@ public class CreateController extends SceneController implements Initializable{
 
 	    }
 		
+		// updates the GUI based on the user's selection of courses
 		public void updateCourses(ActionEvent event) throws IOException{
 			data_table=FXCollections.observableArrayList();
 		    
@@ -94,6 +96,7 @@ public class CreateController extends SceneController implements Initializable{
 		    
 		}
 		
+		// retrieves selected courses from table view
 		public ArrayList<String> getCoursesFromCoursesTable() {
 		    ArrayList<String> courses = new ArrayList<String>();
 		    for (StudentGrade sg : fullCoursesView.getItems()) {
@@ -101,7 +104,8 @@ public class CreateController extends SceneController implements Initializable{
 		    }
 		    return courses;
 		}
-
+		
+		// retrieves grades associated with the courses from table view
 		public ArrayList<String> getGradesFromCoursesTable() {
 		    ArrayList<String> grades = new ArrayList<String>();
 		    for (StudentGrade sg : fullCoursesView.getItems()) {
@@ -111,6 +115,8 @@ public class CreateController extends SceneController implements Initializable{
 		    }
 		    return grades;
 		}
+		
+		// retrieves selected personal charactersitcs from the combobox
 		public ArrayList<String> personalCharsArrList() {
 			ArrayList<String> personalCharsArrList = new ArrayList<String>();
 			for (String pChar : personalChar.getCheckModel().getCheckedItems()) {
@@ -119,6 +125,7 @@ public class CreateController extends SceneController implements Initializable{
 			return personalCharsArrList;
 		}
 		
+		// retrieves selected academic charactersitcs from the combobox
 		public ArrayList<String> academicCharsArrList() {
 			ArrayList<String> academicCharsArrList = new ArrayList<String>();
 			for (String aChar : academicChar.getCheckModel().getCheckedItems()) {
@@ -127,6 +134,7 @@ public class CreateController extends SceneController implements Initializable{
 			return academicCharsArrList;
 		}
 		
+		// initialize the data on the scene
 		public void initialize(URL location, ResourceBundle resources) {
 			sqliteDemo.setOptions(genders, semesters, programs, courses, personalChar, academicChar);
 	        //currentDate.setValue(LocalDate.parse(student.getCurrentDate(), formatter));
