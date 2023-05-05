@@ -59,16 +59,8 @@ public class CreateController extends SceneController implements Initializable{
 		
 		// button checks if the fields have all been filled out and switches scene if this is true
 		public void switchToSaveScene(ActionEvent event) throws IOException{
-			if(firstName.getText().isEmpty()) {
-				return;
-			}
-			if(lastName.getText().isEmpty()) {
-				return;
-			}
-			if(firstYear.getText().isEmpty()) {
-				return;
-			}
-			if(targetSchool.getText().isEmpty()) {
+			if(checkGradesFilled()==false || firstName.getText().isEmpty() || lastName.getText().isEmpty() || firstYear.getText().isEmpty() || targetSchool.getText().isEmpty()) {
+				checkStatus.setText("One of the fields has not been filled out.\nPlease fill out everything before proceeding");
 				return;
 			}
 			try {
