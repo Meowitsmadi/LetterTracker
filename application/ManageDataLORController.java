@@ -13,6 +13,7 @@ import sql.sqliteDemo;
 
 public class ManageDataLORController{
 
+// retrieves the data in the database and populates the combo boxes. 
     public static ComboBox<String> setAddData(ComboBox<String> combo, String name) {
     	combo.getItems().addAll(FXCollections.observableArrayList(sqliteDemo.getAllData(name)));
     	combo.getItems().addAll("");
@@ -52,6 +53,7 @@ public class ManageDataLORController{
         
     }
 
+	// retrieves the data in the database and populates the checklist view. 
 	public static CheckListView<String> setAddData(CheckListView<String> combo, String name) {
 		ObservableList<String> listOfItems = FXCollections.observableArrayList(sqliteDemo.getAllData(name));
 		combo.getItems().addAll(listOfItems);
