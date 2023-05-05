@@ -1,8 +1,9 @@
-package application;
+package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
+import application.PasswordModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,10 +11,6 @@ import javafx.scene.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.*;
-import sql.sqliteDemo;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
 
 public class ChangePassController {
 
@@ -38,11 +35,10 @@ public class ChangePassController {
 			status.setText("One or more of the fields is not filled");
 			return;
 		}
-		// checks if the new pasword is the default or not
 		if (txtNewPassword.getText().equals("p")) {
 			status.setText("You cannot use the default password again");
 		}
-		// checks if old password maatches teh one in the database AND new passwords amtch one another
+		// checks if old password matches the one in the database AND new passwords match one another
 		else if (txtOldPassword.getText().equals(PasswordModel.GetOldPassword()) && txtNewPassword.getText().equals(txtConfirmPassword.getText()))
 		{
 			//change pass to inputed text
