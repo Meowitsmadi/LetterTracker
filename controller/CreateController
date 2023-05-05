@@ -58,7 +58,6 @@ public class CreateController extends SceneController implements Initializable{
 		@FXML private Label checkStatus;
 		
 		public void switchToSaveScene(ActionEvent event) throws IOException{
-			// if any text field are empty, do not allow user to compile the letter of recommendation
 			if(firstName.getText().isEmpty()) {
 				return;
 			}
@@ -75,7 +74,6 @@ public class CreateController extends SceneController implements Initializable{
 				student = new Student(firstName.getText(), lastName.getText(), genders.getValue(), semesters.getValue(), programs.getValue(), targetSchool.getText(),
 		                firstYear.getText(), currentDate.getValue().format(formatter), getCoursesFromCoursesTable(), getGradesFromCoursesTable(), personalCharsArrList(), academicCharsArrList());
 		        String lor = student.toString();
-		        System.out.println(lor);
 		        lorText.setText(lor);
 		        root = FXMLLoader.load(getClass().getResource("/view/NewLOR.fxml"));
 		        changeScene(event);
@@ -134,7 +132,6 @@ public class CreateController extends SceneController implements Initializable{
 	        //currentDate.setValue(LocalDate.parse(student.getCurrentDate(), formatter));
 			col_course.setCellValueFactory(new PropertyValueFactory<>("course"));
 	        col_grade.setCellValueFactory(new PropertyValueFactory<>("grade"));
-	        System.out.println(isEdit);
 	        if(isEdit) {
 				firstName.setText(student.getFirstName());
 		        lastName.setText(student.getLastName());
