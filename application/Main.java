@@ -17,7 +17,7 @@ public class Main extends Application {
 			primaryStage.getIcons().add(icon);
 			primaryStage.setResizable(false);
 			primaryStage.setTitle("Letter Tracker");
-			sqliteDemo.PopulateInitialData();
+			sqliteDemo.PopulateInitialData(); // initializes and populates the database and tables
 			Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
